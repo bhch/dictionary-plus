@@ -2,7 +2,7 @@
     <img width="100" src="icons/dictionary-plus-256.png" alt="Dictionary Plus Icon">
 </p>
 
-# Dcionary Plus
+# Dctionary Plus
 
 A popup dictionary extension for Firefox for quickly looking up word-meanings.
 
