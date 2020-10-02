@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Dictionary Plus - Saved words</title>
+  <link rel="stylesheet" type="text/css" href="./saved-list.css">
+  <link rel="shortcut icon" type="image/png" href="/icons/dictionary-plus-48.png"/>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="container">
+    <div class="branding">
+      <img src="/icons/dictionary-plus-256.png">
+      <span>Dictionary Plus</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h1 id="savedCounterHeading"></h1>
+  <div id="wordsContainer"></div>
+</div>
+
+<div class="page-footer">
+  <div class="container">
+    <p>
+      Want a new feature? Found a bug?<br>
+      Report on
+      <a href="https://github.com/bhch/dictionary-plus">GitHub</a>.
+    </p>
+  </div>
+</div>
+
+<div id="reloadPrompt" class="reload-prompt hide">
+  New words have been added to or removed from this list.<br>
+  <strong>Reload</strong> page to see changes. 
+</div>
+
+<div id="confirmRemoveModal" class="modal hide">
+  <div class="dialog">
+    <div class="dialog-heading">
+      <h3>Remove word?</h3>
+    </div>
+    <div class="dialog-body">
+      Are you sure you want to permanently remove this word?
+    </div>
+    <div class="dialog-footer">
+      <button class="btn btn-remove" id="confirmButton">Yes, remove</button>
+      <button class="btn" id="cancelButton">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="./saved-list.js"></script>
+</body>
+</html>

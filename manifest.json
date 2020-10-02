@@ -1,0 +1,49 @@
+{
+
+  "manifest_version": 2,
+  "name": "Dictionary Plus",
+  "version": "1.0",
+
+  "description": "A popup dictionary for quickly looking up word-meanings. It also allows to you to save new words that you like and build your vocabulary.",
+  "homepage_url": "https://github.com/bhch/dictionary-plus",
+  "icons": {
+    "48": "icons/dictionary-plus-48.png",
+    "96": "icons/dictionary-plus-96.png",
+    "128": "icons/dictionary-plus-128.png",
+    "256": "icons/dictionary-plus-256.png",
+    "512": "icons/dictionary-plus-512.png"
+  },
+
+  "permissions": [
+    "menus",
+    "storage",
+    "unlimitedStorage",
+    "https://www.google.com/"
+  ],
+
+  "background": {
+    "scripts": [
+      "background_scripts/menus.js",
+      "background_scripts/actions.js",
+      "background_scripts/fetch-definition.js"
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "content_scripts/dictionary-plus.js",
+        "pages/saved-list.js"
+      ]
+    }
+  ], 
+
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/dictionary-plus-48.png"
+    },
+    "default_title": "View saved words (Dictionary Plus)"
+  }
+
+}
