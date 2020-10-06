@@ -1,6 +1,6 @@
 browser.menus.create({
   id: "search-dictionary",
-  title: "Search dictionary",
+  title: browser.i18n.getMessage('contextMenu'),
   contexts: ["selection"]
 });
 

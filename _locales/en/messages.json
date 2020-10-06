@@ -1,0 +1,126 @@
+{
+  "extensionName": {
+    "message": "Dictionary Plus",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "A popup dictionary for quickly looking up word-meanings. It also allows to you to save new words that you like and build your vocabulary.",
+    "description": "Description of the extension."
+  },
+
+  "actionBtnTitle": {
+    "message": "View saved words (Dictionary Plus)",
+    "description": "Title text for action button in browser toolbar."
+  },
+
+  "contextMenu": {
+    "message": "Search dictionary",
+    "description": "Context menu label."
+  },
+
+  "loadingMessage": {
+    "message": "Loading...",
+    "description": "Loading message."
+  },
+
+  "noDefinitionMessage": {
+    "message": "No definition found.",
+    "description": "Message to show when no definition was found."
+  },
+
+  "closeBtnTitle": {
+    "message": "Close",
+    "description": "Title text for popup's close button."
+  },
+
+  "pronounceBtnTitle": {
+    "message": "Pronunciation",
+    "description": "Title text for audio pronounciation button."
+  },
+
+  "moreBtnLabel": {
+    "message": "More",
+    "description": "Text to display in 'More' button."
+  },
+
+  "moreBtnTitle": {
+    "message": "Full definition",
+    "description": "Title text for 'More' button."
+  },
+
+  "saveBtnLabel": {
+    "message": "Save",
+    "description": "Text to display in 'Save' button."
+  },
+
+  "saveBtnTitle": {
+    "message": "Save word",
+    "description": "Title text for 'Save' button."
+  },
+
+  "savedBtnLabel": {
+    "message": "Saved",
+    "description": "Text to display in 'Saved' button (after word is saved)."
+  },
+
+  "savedBtnTitle": {
+    "message": "Word has been saved",
+    "description": "Title text for 'Saved' button."
+  },
+
+  "removeBtnLabel": {
+    "message": "Remove",
+    "description": "Text to display in 'Remove' button."
+  },
+
+  "removeBtnTitle": {
+    "message": "Remove this word",
+    "description": "Title text for 'Remove' button."
+  },
+
+  "confirmRemoveBtnLabel": {
+    "message": "Yes, remove",
+    "description": "Text to display on confirm remove button inside modal."
+  },
+
+  "cancelBtnLabel": {
+    "message": "Cancel",
+    "description": "Text to display in 'Cancel' button."
+  },
+
+  "savedListPageTitle": {
+    "message": "Saved words",
+    "description": "Window title for saved list page."
+  },
+
+  "emptyListMessage": {
+    "message": "Saved words will appear here",
+    "description": "Message displayed on saved list page when no words are saved yet."
+  },
+
+  "removeModalTitle": {
+    "message": "Remove word?",
+    "description": "Title for remove word modal."
+  },
+
+  "removeModalBody": {
+    "message": "Are you sure you want to permanently remove this word?",
+    "description": "Text to show in remove word modal body."
+  },
+
+  "reloadMessage": {
+    "message": "New words have been added to or removed from this list.<br><strong>Reload</strong> page to see changes.",
+    "description": "Reload message for saved list page."
+  },
+
+  "footerMessage": {
+    "message": "Want a new feature? Found a bug?<br>Report on $GitHubLink$.",
+    "description": "Footer message for extension pages.",
+    "placeholders": {
+      "githublink": {
+        "content": "<a href=\"$1\">GitHub</a>"
+      }
+    }
+  }
+}

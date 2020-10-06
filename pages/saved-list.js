@@ -5,7 +5,7 @@ function updateSavedCounter() {
     const totalSaved = Object.keys(saved).length;
     const counter = document.getElementById('savedCounterHeading');
     if (totalSaved > 0)
-      counter.textContent = 'Saved words (' + totalSaved + ')';
+      counter.textContent = browser.i18n.getMessage('savedListPageTitle') + ' (' + totalSaved + ')';
     else 
       counter.textContent = '';
   });
@@ -24,7 +24,7 @@ function populateWords() {
     if (!words.length) {
       const emptyMsg = document.createElement('h2');
       emptyMsg.setAttribute('class', 'empty-msg');
-      emptyMsg.textContent = 'Saved words will appear here';
+      emptyMsg.textContent = browser.i18n.getMessage('emptyListMessage');
       container.appendChild(emptyMsg);
     }
 
@@ -51,7 +51,7 @@ function populateWords() {
         btnListen = document.createElement('button');
         btnListen.setAttribute('class', 'btn btn-listen');
         btnListen.setAttribute('type', 'button');
-        btnListen.setAttribute('title', 'Pronunciation');
+        btnListen.setAttribute('title', browser.i18n.getMessage('pronounceBtnTitle'));
 
         btnListen.onclick = function(e) {
           audio.play();
@@ -81,16 +81,16 @@ function populateWords() {
       linkMore.setAttribute('class', 'link-more');
       linkMore.setAttribute('href', 'https://google.com/search?q=define+' + word);
       linkMore.setAttribute('target', '_blank');
-      linkMore.textContent = 'More';
-      linkMore.setAttribute('title', 'Full definition');
+      linkMore.textContent = browser.i18n.getMessage('moreBtnLabel');
+      linkMore.setAttribute('title', browser.i18n.getMessage('moreBtnTitle'));
 
       let footer = document.createElement('div');
       footer.setAttribute('class', 'footer');
 
       let btnRemove = document.createElement('button');
       btnRemove.setAttribute('class', 'btn btn-remove');
-      btnRemove.textContent = 'Remove';
-      btnRemove.setAttribute('title', 'Remove word');
+      btnRemove.textContent = browser.i18n.getMessage('removeBtnLabel');
+      btnRemove.setAttribute('title', browser.i18n.getMessage('removeBtnTitle'));
       btnRemove.onclick = function(e) {
         removeWord(word);
       }
@@ -160,6 +160,16 @@ document.getElementById('cancelButton').addEventListener('click', closeModal);
 
 
 (function () {
-    updateSavedCounter();
-    populateWords();
+  // Populate localised strings
+  document.getElementsByTagName('title')[0].textContent = browser.i18n.getMessage('extensionName') + ' - ' + browser.i18n.getMessage("savedListPageTitle");
+  document.getElementById('extensionName').textContent = browser.i18n.getMessage("extensionName");
+  document.getElementById('confirmButton').textContent = browser.i18n.getMessage("confirmRemoveBtnLabel");
+  document.getElementById('cancelButton').textContent = browser.i18n.getMessage("cancelBtnLabel");
+  document.querySelector('#confirmRemoveModal .dialog-heading h3').textContent = browser.i18n.getMessage("removeModalTitle");
+  document.querySelector('#confirmRemoveModal .dialog-body').textContent = browser.i18n.getMessage("removeModalBody");
+  document.getElementById('reloadPrompt').innerHTML = browser.i18n.getMessage('reloadMessage');
+  document.getElementById('footerMsg').innerHTML = browser.i18n.getMessage('footerMessage', 'https://github.com/bhch/dictionary-plus');
+
+  updateSavedCounter();
+  populateWords();
 })();

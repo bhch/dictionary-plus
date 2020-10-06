@@ -1,5 +1,5 @@
-const LOADING_MESSAGE = 'Loading...';
-const NO_DEFINITION_MESSAGE = 'No definition found.'
+const LOADING_MESSAGE = browser.i18n.getMessage('loadingMessage');
+const NO_DEFINITION_MESSAGE = browser.i18n.getMessage('noDefinitionMessage');
 const OPENED_POPUPS = {};
 
 
@@ -307,12 +307,12 @@ function createPopUp() {
   let btnListen = document.createElement('button');
   btnListen.setAttribute('class', 'btn btn-listen hide');
   btnListen.setAttribute('type', 'button');
-  btnListen.setAttribute('title', 'Pronunciation');
+  btnListen.setAttribute('title', browser.i18n.getMessage("pronounceBtnTitle"));
 
   let btnClose = document.createElement('button');
   btnClose.setAttribute('class', 'btn btn-close');
   btnClose.setAttribute('type', 'button');
-  btnClose.setAttribute('title', 'Close');
+  btnClose.setAttribute('title', browser.i18n.getMessage("closeBtnTitle"));
   btnClose.onclick = function(e) {
     destroyPopUp(key);
   };
@@ -340,24 +340,24 @@ function createPopUp() {
   linkMore.setAttribute('class', 'link-more');
   linkMore.setAttribute('href', 'https://google.com/search?q=define+' + selectedText);
   linkMore.setAttribute('target', '_blank');
-  linkMore.textContent = 'More';
-  linkMore.setAttribute('title', 'Full definition');
+  linkMore.textContent = browser.i18n.getMessage("moreBtnLabel");
+  linkMore.setAttribute('title', browser.i18n.getMessage("moreBtnTitle"));
 
   let footer = document.createElement('div');
   footer.setAttribute('class', 'footer');
 
   let btnSave = document.createElement('button');
   btnSave.setAttribute('class', 'btn btn-save');
-  btnSave.textContent = 'Save';
-  btnSave.setAttribute('title', 'Save word');
+  btnSave.textContent = browser.i18n.getMessage("saveBtnLabel");
+  btnSave.setAttribute('title', browser.i18n.getMessage("saveBtnTitle"));
   btnSave.onclick = function(e) {
     saveWord(key);
   }
 
   let labelSave = document.createElement('span');
   labelSave.setAttribute('class', 'btn label-save hide');
-  labelSave.textContent = 'Saved';
-  labelSave.setAttribute('title', 'Word has been saved');
+  labelSave.textContent = browser.i18n.getMessage("savedBtnLabel");
+  labelSave.setAttribute('title', browser.i18n.getMessage("savedBtnTitle"));
 
   shadow.appendChild(style);
   shadow.appendChild(container);
