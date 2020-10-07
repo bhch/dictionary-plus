@@ -12,6 +12,24 @@ It also allows you to save new words that you like and build your vocabulary.
 
 Get it from here: https://addons.mozilla.org/en-US/firefox/addon/dictionary-plus/
 
+## Contributing
+
+You can contributing to this extension by:
+
+ 1. reporting bugs or suggesting new features. 
+ 2. recommending this extension to your friends.
+ 3. reviewing it on [Mozilla Add-Ons page](https://addons.mozilla.org/en-US/firefox/addon/dictionary-plus/).
+ 4. submitting code for new features or bugfixes.
+
+## Future features
+
+These are features that I'd like this extension to have in future:
+
+ - [ ] Allow users to specify the language to use for dictionary lookup.
+ - [ ] Allow users to view translations of a definition.
+ - [ ] Show info from Google's knowledge snippet or first search result if no definition is found.
+ - [ ] Exporting saved words.
+
 ## License
 
 [BSD-3-Clause](LICENSE)
