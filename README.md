@@ -10,11 +10,11 @@ It also allows you to save new words that you like and build your vocabulary.
 
 ## Install
 
-Get it from here: https://addons.mozilla.org/en-US/firefox/addon/dictionary-plus/
+Get it from here: https://addons.mozilla.org/firefox/addon/dictionary-plus/
 
 ## Contributing
 
-You can contributing to this extension by:
+You can contribute to this extension by:
 
  1. reporting bugs or suggesting new features. 
  2. recommending this extension to your friends.
