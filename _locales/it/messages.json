@@ -1,0 +1,126 @@
+{
+  "extensionName": {
+    "message": "Dictionary Plus",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "Un dizionario popup per cercare rapidamente i significati delle parole. Ti permette anche di salvare nuove parole che ti piacciono e di costruire il tuo vocabolario.",
+    "description": "Description of the extension."
+  },
+
+  "actionBtnTitle": {
+    "message": "Visualizza le parole salvate (Dictionary Plus)",
+    "description": "Title text for action button in browser toolbar."
+  },
+
+  "contextMenu": {
+    "message": "Cerca nel dizionario",
+    "description": "Context menu label."
+  },
+
+  "loadingMessage": {
+    "message": "Attendere prego...",
+    "description": "Loading message."
+  },
+
+  "noDefinitionMessage": {
+    "message": "Nessuna definizione trovata.",
+    "description": "Message to show when no definition was found."
+  },
+
+  "closeBtnTitle": {
+    "message": "Chiudi",
+    "description": "Title text for popup's close button."
+  },
+
+  "pronounceBtnTitle": {
+    "message": "Pronuncia",
+    "description": "Title text for audio pronounciation button."
+  },
+
+  "moreBtnLabel": {
+    "message": "Di Più",
+    "description": "Text to display in 'More' button."
+  },
+
+  "moreBtnTitle": {
+    "message": "Definizione completa",
+    "description": "Title text for 'More' button."
+  },
+
+  "saveBtnLabel": {
+    "message": "Salva",
+    "description": "Text to display in 'Save' button."
+  },
+
+  "saveBtnTitle": {
+    "message": "Salva parola",
+    "description": "Title text for 'Save' button."
+  },
+
+  "savedBtnLabel": {
+    "message": "Salvato",
+    "description": "Text to display in 'Saved' button (after word is saved)."
+  },
+
+  "savedBtnTitle": {
+    "message": "La parola è stata salvata",
+    "description": "Title text for 'Saved' button."
+  },
+
+  "removeBtnLabel": {
+    "message": "Elimina",
+    "description": "Text to display in 'Remove' button."
+  },
+
+  "removeBtnTitle": {
+    "message": "Eliminare la parola",
+    "description": "Title text for 'Remove' button."
+  },
+
+  "confirmRemoveBtnLabel": {
+    "message": "Sì, elimina",
+    "description": "Text to display on confirm remove button inside modal."
+  },
+
+  "cancelBtnLabel": {
+    "message": "Annulla",
+    "description": "Text to display in 'Cancel' button."
+  },
+
+  "savedListPageTitle": {
+    "message": "Parole salvate",
+    "description": "Window title for saved list page."
+  },
+
+  "emptyListMessage": {
+    "message": "Le parole salvate verranno visualizzate qui",
+    "description": "Message displayed on saved list page when no words are saved yet."
+  },
+
+  "removeModalTitle": {
+    "message": "Eliminare la parola?",
+    "description": "Title for remove word modal."
+  },
+
+  "removeModalBody": {
+    "message": "Sei sicuro di voler eliminare definitivamente questa parola?",
+    "description": "Text to show in remove word modal body."
+  },
+
+  "reloadMessage": {
+    "message": "Nuove parole sono state aggiunte o rimosse da questo elenco. Ricarica la pagina per vedere le modifiche.",
+    "description": "Reload message for saved list page."
+  },
+
+  "footerMessage": {
+    "message": "Vuoi una nuova funzionalità? Hai trovato un bug? Rapporto su $GitHubLink$.",
+    "description": "Footer message for extension pages.",
+    "placeholders": {
+      "githublink": {
+        "content": "<a href=\"$1\">GitHub</a>"
+      }
+    }
+  }
+}
