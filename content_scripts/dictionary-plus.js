@@ -98,6 +98,9 @@ function createPopUp() {
       line-height: 1;
       box-sizing: border-box;
       font-size: 1rem;
+      letter-spacing: 0;
+      text-shadow: none;
+      text-align: left;
     }
     .hide {
       display: none !important;
