@@ -498,7 +498,9 @@ function updatePopUp(key, data) {
     return;
   }
 
-  popup.querySelector('.term').textContent = data.term;
+  if (data.term)
+    popup.querySelector('.term').textContent = data.term;
+  
   popup.querySelector('.phonetic').textContent = data.phonetic;
   popup.querySelector('.type').textContent = data.type;
   popup.querySelector('.definition').textContent = data.definition;
