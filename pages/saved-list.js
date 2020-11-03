@@ -154,9 +154,70 @@ function closeModal(e) {
   document.getElementById('confirmRemoveModal').classList.add('hide');
 }
 
-document.getElementById('confirmRemoveModal').addEventListener('click', closeModal);
-
+document.getElementById('confirmRemoveModal').addEventListener('click', function(e) {
+  if (e.target === this)
+    closeModal(e);
+});
 document.getElementById('cancelButton').addEventListener('click', closeModal);
+
+
+function updateSettings(key, value) {
+  browser.storage.local.get('settings')
+    .then((item) => {
+      const settings = item.settings || {};
+      settings[key] = value;
+      browser.storage.local.set({settings: {...settings}});
+    });
+}
+
+function setTheme() {
+  browser.storage.local.get('settings')
+  .then((item) => {
+    const settings = item.settings || {};
+    if (settings.theme) {
+      if (settings.theme === 'dark') {
+        document.body.classList.add('dark');
+        Array.from(document.querySelectorAll('input[name="theme"]')).forEach((el) => {
+          el.checked = el.value === 'dark';
+        });
+      }
+    }
+  });
+}
+
+
+function toggleTheme(e) {
+  const theme = e.target.value;
+
+  if (theme === 'dark')
+    document.body.classList.add('dark');
+  else
+    document.body.classList.remove('dark');
+
+  updateSettings('theme', theme);
+}
+
+Array.from(document.querySelectorAll('input[name="theme"]')).forEach((el) => {
+  el.addEventListener('click', toggleTheme);
+});
+
+
+function showSettingsModal(e) {
+  const modal = document.getElementById('settingsModal');
+  modal.classList.remove('hide');
+}
+
+document.getElementById('settingsButton').addEventListener('click', showSettingsModal);
+
+function closeSettingsModal(e) {
+  document.getElementById('settingsModal').classList.add('hide');
+}
+
+document.getElementById('settingsModal').addEventListener('click', function(e) {
+  if (e.target === this)
+    closeSettingsModal(e);
+});
+document.getElementById('closeSettingsModalButton').addEventListener('click', closeSettingsModal);
 
 
 (function () {
@@ -169,7 +230,14 @@ document.getElementById('cancelButton').addEventListener('click', closeModal);
   document.querySelector('#confirmRemoveModal .dialog-body').textContent = browser.i18n.getMessage("removeModalBody");
   document.getElementById('reloadPrompt').innerHTML = browser.i18n.getMessage('reloadMessage');
   document.getElementById('footerMsg').innerHTML = browser.i18n.getMessage('footerMessage', 'https://github.com/bhch/dictionary-plus');
+  document.getElementById('menuItemSettings').textContent = browser.i18n.getMessage("settingsLabel");
+  document.querySelector('#settingsModal .dialog-heading h3').textContent = browser.i18n.getMessage("settingsLabel"); 
+  document.getElementById('themeSettingLabel').textContent = browser.i18n.getMessage("changeThemeLabel");
+  document.getElementById('themeLightLabel').textContent = browser.i18n.getMessage("themeLightLabel");
+  document.getElementById('themeDarkLabel').textContent = browser.i18n.getMessage("themeDarkLabel");
+  document.getElementById('closeSettingsModalButton').textContent = browser.i18n.getMessage("closeBtnTitle");
 
   updateSavedCounter();
   populateWords();
+  setTheme();
 })();

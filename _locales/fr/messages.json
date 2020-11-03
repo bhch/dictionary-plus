@@ -122,5 +122,25 @@
         "content": "<a href=\"$1\">GitHub</a>"
       }
     }
+  },
+
+  "settingsLabel": {
+    "message": "Réglages",
+    "Description": "Text for label and button for Settings."
+  },
+
+  "changeThemeLabel": {
+    "message": "Changer le thème",
+    "description": "Text for changing theme."
+  },
+
+  "themeLightLabel": {
+    "message": "Claire",
+    "description": "Name or label for Light theme."
+  },
+
+  "themeDarkLabel": {
+    "message": "Foncée",
+    "description": "Name or label for Dark theme."
   }
 }
