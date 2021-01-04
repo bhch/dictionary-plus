@@ -1,4 +1,4 @@
-const REQUEST_URI = 'https://www.google.com/search';
+const REQUEST_URI = "https://www.google.com/async/callback:5493?fc=ElAKKDBhN3ByblU0TEFvX3ZhbVF4cnAyYmh5andfRks4MTdQdV9FSFdiZjYSF29yanlYOS05RjczYno3c1Byc09pNkE0GgtTOTdvMjViOXNTZw&fcv=2&vet=12ahUKEwjflq-O1oHuAhW97XMBHa6hCO0Qg4MCMAB6BAgGEAE..i&ved=2ahUKEwjflq-O1oHuAhW97XMBHa6hCO0Qjq0DKAAwAHoECAYQCQ&yv=3&async=corpus:en,hhdr:true,hwdgt:true,wfp:true,xpnd:false,ttl:,tsl:,ptl:,_id:fc_14,_pms:s,_fmt:pc";
 
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -7,7 +7,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return;
   }
 
-  let uri = REQUEST_URI + '?q=define+' + message.term;
+  let uri = REQUEST_URI + ',term:' + message.term;
 
   fetch(uri, { 
     method: 'GET',
