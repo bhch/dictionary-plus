@@ -1,5 +1,5 @@
-const REQUEST_URI = "https://www.google.com/async/callback:5493?fc=ElAKKDBhN3ByblU0TEFvX3ZhbVF4cnAyYmh5andfRks4MTdQdV9FSFdiZjYSF29yanlYOS05RjczYno3c1Byc09pNkE0GgtTOTdvMjViOXNTZw&fcv=2&vet=12ahUKEwjflq-O1oHuAhW97XMBHa6hCO0Qg4MCMAB6BAgGEAE..i&ved=2ahUKEwjflq-O1oHuAhW97XMBHa6hCO0Qjq0DKAAwAHoECAYQCQ&yv=3&async=corpus:en,hhdr:true,hwdgt:true,wfp:true,xpnd:false,ttl:,tsl:,ptl:,_id:fc_14,_pms:s,_fmt:pc";
-
+const DICTIONARY_URI = "https://www.google.com/async/callback:5493?fc=ElAKKDBhN3ByblU0TEFvX3ZhbVF4cnAyYmh5andfRks4MTdQdV9FSFdiZjYSF29yanlYOS05RjczYno3c1Byc09pNkE0GgtTOTdvMjViOXNTZw&fcv=2&vet=12ahUKEwjflq-O1oHuAhW97XMBHa6hCO0Qg4MCMAB6BAgGEAE..i&ved=2ahUKEwjflq-O1oHuAhW97XMBHa6hCO0Qjq0DKAAwAHoECAYQCQ&yv=3&async=corpus:en,hhdr:true,hwdgt:true,wfp:true,xpnd:false,ttl:,tsl:,ptl:,_id:fc_14,_pms:s,_fmt:pc";
+const SEARCH_URI = 'https://www.google.com/search';
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
@@ -7,23 +7,39 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return;
   }
 
-  let uri = REQUEST_URI + ',term:' + message.term;
+  let uri = DICTIONARY_URI + ',term:' + message.term;
 
-  fetch(uri, { 
-    method: 'GET',
-    credentials: 'omit'
+  sendRequest(uri, (text) => {
+    let dictionaryData = parse(text, 'dictionary');
+
+    if (!dictionaryData)  {
+      /* Nothing found in dictionary, try from search results */
+
+      uri = SEARCH_URI + '?q=define+' + message.term;
+
+      sendRequest(uri, (text) => {
+        dictionaryData = parse(text, 'search');
+        sendResponse(dictionaryData);
+      });
+    }
+    
+    if (dictionaryData)
+      sendResponse(dictionaryData);
   })
-  .then((response) => response.text())
-  .then((text) => {
-    const dictionaryData = parse(text);
-
-    sendResponse(dictionaryData);
-
-  });
 
   return true;
 
 });
+
+
+function sendRequest(uri, callback) {
+  fetch(uri, {
+    method: 'GET',
+    credentials: 'omit'
+  })
+  .then((response) => response.text())
+  .then((text) => callback(text));
+}
 
 
 function fromDictionary(doc) {
@@ -87,13 +103,13 @@ function fromFeaturedSearch(doc) {
 }
 
 
-function parse(htmlString) {
+function parse(htmlString, type) {
   let doc = new DOMParser().parseFromString(htmlString, 'text/html');
 
-  let data = fromDictionary(doc);
+  if (type === 'dictionary')
+    return fromDictionary(doc);
 
-  if (!data)
-    data = fromKnowledgePanel(doc);
+  let data = fromKnowledgePanel(doc);
 
   if (!data)
     data = fromFeaturedSearch(doc);
