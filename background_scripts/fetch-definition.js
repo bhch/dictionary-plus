@@ -1,4 +1,4 @@
-const DICTIONARY_URI = "https://www.google.com/async/callback:5493?fc=ElAKKDBhN3ByblU0TEFvX3ZhbVF4cnAyYmh5andfRks4MTdQdV9FSFdiZjYSF29yanlYOS05RjczYno3c1Byc09pNkE0GgtTOTdvMjViOXNTZw&fcv=2&vet=12ahUKEwjflq-O1oHuAhW97XMBHa6hCO0Qg4MCMAB6BAgGEAE..i&ved=2ahUKEwjflq-O1oHuAhW97XMBHa6hCO0Qjq0DKAAwAHoECAYQCQ&yv=3&async=corpus:en,hhdr:true,hwdgt:true,wfp:true,xpnd:false,ttl:,tsl:,ptl:,_id:fc_14,_pms:s,_fmt:pc";
+const DICTIONARY_URI = "https://www.google.com/async/callback:5493?fc=ErYBCndBTlVfTnFRTnhPUmJTOXR5Tjc2RjBfUWNzZ1hpcVdaYWJjNk5YWEJyQnhqZmdJQnJyNGZaeU92S2pRZ2VZWHZ4dVc1eUNRbGNacVNGU3hoQkJNNEk2bWxQY3plSW9ZVDJzUHRoSWgySERqZEQ2cnBQdnBEZEZHdxIXR000TFlaWHZGSkNINC1FUHRNMkhvQTQaIkFPTVlSd0R6VE45bzE5d0FXZEY3amZCdzhBNEQxMVc1cmc&fcv=3&vet=12ahUKEwiV24uM5pnyAhWQwzgGHbTmAeQQg4MCMAJ6BAgFEAE..i&ved=0CAEQu-gBahcKEwi4-vCO5pnyAhUAAAAAHQAAAAAQAw&yv=3&oq=indeed&async=corpus:en,hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:en,ptl:,_fmt:prog,_id:fc_4";
 const SEARCH_URI = 'https://www.google.com/search';
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -8,6 +8,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   let uri = DICTIONARY_URI + ',term:' + message.term;
+  //let uri = SEARCH_URI + '?q=define+' + message.term;
 
   sendRequest(uri, (text) => {
     let dictionaryData = parse(text, 'dictionary');
@@ -33,9 +34,16 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 
 function sendRequest(uri, callback) {
+
+  let headers = new Headers({
+    'Accept-Language': 'en-GB,en;q=0.7,en-US;q=0.3',
+    'Cookie': ''
+  });
+
   fetch(uri, {
     method: 'GET',
-    credentials: 'omit'
+    credentials: 'omit',
+    headers: headers
   })
   .then((response) => response.text())
   .then((text) => callback(text));
