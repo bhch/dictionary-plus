@@ -8,7 +8,6 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   let uri = DICTIONARY_URI + ',term:' + message.term;
-  //let uri = SEARCH_URI + '?q=define+' + message.term;
 
   sendRequest(uri, (text) => {
     let dictionaryData = parse(text, 'dictionary');
