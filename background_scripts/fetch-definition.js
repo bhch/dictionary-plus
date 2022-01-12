@@ -9,30 +9,48 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   let uri = DICTIONARY_URI + ',term:' + message.term;
 
-  sendRequest(uri, (text) => {
-    let dictionaryData = parse(text, 'dictionary');
+  sendRequest(
+    uri,
+    (text) => {
+      let dictionaryData = parse(text, 'dictionary');
 
-    if (!dictionaryData)  {
-      /* Nothing found in dictionary, try from search results */
+      if (!dictionaryData)  {
+        /* Nothing found in dictionary, try from search results */
 
-      uri = SEARCH_URI + '?q=define+' + message.term;
+        uri = SEARCH_URI + '?q=define+' + message.term;
 
-      sendRequest(uri, (text) => {
-        dictionaryData = parse(text, 'search');
+        sendRequest(
+          uri,
+          (text) => {
+            dictionaryData = parse(text, 'search');
+            sendResponse(dictionaryData);
+          },
+          (error) => {
+            sendResponse({
+              term: message.term,
+              error: error.toString()
+            });
+          }
+        );
+      }
+      
+      if (dictionaryData)
         sendResponse(dictionaryData);
+    },
+    (error) => {
+      sendResponse({
+        term: message.term,
+        error: error.toString()
       });
     }
-    
-    if (dictionaryData)
-      sendResponse(dictionaryData);
-  })
+  );
 
   return true;
 
 });
 
 
-function sendRequest(uri, callback) {
+function sendRequest(uri, callback, errorCallback) {
 
   let headers = new Headers({
     'Accept-Language': 'en-GB,en;q=0.7,en-US;q=0.3',
@@ -45,7 +63,8 @@ function sendRequest(uri, callback) {
     headers: headers
   })
   .then((response) => response.text())
-  .then((text) => callback(text));
+  .then((text) => callback(text))
+  .catch((error) => errorCallback(error));
 }
 
 

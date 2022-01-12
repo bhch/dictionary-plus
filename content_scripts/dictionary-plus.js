@@ -210,6 +210,23 @@ function getStyles(placement, popUpHeight, popUpWidth) {
       line-height: 1.3;
     }
 
+    .error {
+      color: ${theme === 'dark' ? '#fff' : '#c30404'};
+      background: ${theme === 'dark' ? '#920202' : '#ffebeb'};
+      font-family: monospace;
+      line-height: 1.1;
+      padding: 5px 2px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .report-problem {
+      float: none !important;
+    }
+    .report-problem::after {
+      display: none !important;
+    }
+
     .link-more {
       color: ${theme === 'dark' ? '#d9d943' : 'blue'};
       font-family: sans-serif;
@@ -530,10 +547,29 @@ function updatePopUp(key, data) {
 
   if (data.term)
     popup.querySelector('.term').textContent = data.term;
-  
-  popup.querySelector('.phonetic').textContent = data.phonetic;
-  popup.querySelector('.type').textContent = data.type;
-  popup.querySelector('.definition').textContent = data.definition;
+
+  if (data.error) {
+    let definition = popup.querySelector('.definition');
+    definition.textContent = 'Error:';
+
+    let definitionError = document.createElement('div');
+    definitionError.setAttribute('class', 'error');
+    definitionError.textContent = data.error;
+    definition.appendChild(definitionError);
+
+    let reportProblem = document.createElement('a');
+    reportProblem.setAttribute('class', 'link-more report-problem');
+    reportProblem.setAttribute('href', 'https://forms.gle/pYwAEfTLjZibeyPFA');
+    reportProblem.setAttribute('target', '_blank');
+    reportProblem.textContent = 'Report problem';
+    definition.appendChild(reportProblem);
+
+  }
+  else {
+    popup.querySelector('.phonetic').textContent = data.phonetic;
+    popup.querySelector('.type').textContent = data.type;
+    popup.querySelector('.definition').textContent = data.definition;
+  }
 
   if (data.audio) {
     let audio = document.createElement('audio');
