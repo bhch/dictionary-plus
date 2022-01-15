@@ -214,6 +214,7 @@ function getStyles(placement, popUpHeight, popUpWidth) {
       color: ${theme === 'dark' ? '#fff' : '#c30404'};
       background: ${theme === 'dark' ? '#920202' : '#ffebeb'};
       font-family: monospace;
+      font-size: 13px;
       line-height: 1.1;
       padding: 5px 2px;
       margin-top: 10px;
