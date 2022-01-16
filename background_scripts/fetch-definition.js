@@ -1,4 +1,10 @@
-const DICTIONARY_URI = "https://www.google.com/async/callback:5493?fc=EswBCowBQU1sdnJwc0NnaGs5ak10YWRSNDN0LTdwRUhGcy13aTV6LTktX3JyT3lLLUhqV3pPYm14bk9YeHhJc0xOdVJqUFJvLW55eHdudnEtZG9rdWtiWndrYmZ3bWVveGVnYVNlamd5R2Vidk1pd3p4NmhVMTRicHhiQk8wVXRQdGpfbzBMdmQzMkgyTWZvcV8SF1JCZmZZZDM3S0lyU3o3c1BnYnFPeUFFGiJBSFdTTm1YaG9wTENBRDJ0ZG5Uc0VwUnJTSGtjOFd2M0xB&fcv=3&vet=12ahUKEwjdra7G5az1AhUK6XMBHQGdAxkQg4MCegQIEBAB..i&ved=2ahUKEwj3lKvJ5az1AhUL_XMBHeKbCTgQu-gBegQIARAN&yv=3&oq=buy&async=corpus:en,hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:en,ptl:hi,_fmt:prog,_id:fc_2"
+const DICTIONARY_URI_BASE = "https://www.google.com/async/callback:5493?fc=EswBCowBQU1sdnJwc0NnaGs5ak10YWRSNDN0LTdwRUhGcy13aTV6LTktX3JyT3lLLUhqV3pPYm14bk9YeHhJc0xOdVJqUFJvLW55eHdudnEtZG9rdWtiWndrYmZ3bWVveGVnYVNlamd5R2Vidk1pd3p4NmhVMTRicHhiQk8wVXRQdGpfbzBMdmQzMkgyTWZvcV8SF1JCZmZZZDM3S0lyU3o3c1BnYnFPeUFFGiJBSFdTTm1YaG9wTENBRDJ0ZG5Uc0VwUnJTSGtjOFd2M0xB&fcv=3&vet=12ahUKEwjdra7G5az1AhUK6XMBHQGdAxkQg4MCegQIEBAB..i&ved=2ahUKEwj3lKvJ5az1AhUL_XMBHeKbCTgQu-gBegQIARAN&yv=3&oq=buy&async=hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:en,ptl:hi,_fmt:prog,_id:fc_2"
+
+const DICTIONARY_URIS = [
+  DICTIONARY_URI_BASE + ',corpus:en',
+  DICTIONARY_URI_BASE + ',corpus:en-US', // for american IP addresses (VPN etc)
+]
+
 const SEARCH_URI = 'https://www.google.com/search';
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -7,7 +13,12 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return;
   }
 
-  let uri = DICTIONARY_URI + ',term:' + message.term;
+  /*:TODO:
+  The following nested functions code is a dirty fix.
+  Use and chain promises instead.
+  */
+
+  let uri = DICTIONARY_URIS[0] + ',term:' + message.term;
 
   sendRequest(
     uri,
@@ -15,15 +26,37 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
       let dictionaryData = parse(text, 'dictionary');
 
       if (!dictionaryData)  {
-        /* Nothing found in dictionary, try from search results */
+        /* Try second URI */
 
-        uri = SEARCH_URI + '?q=define+' + message.term;
+        uri = DICTIONARY_URIS[1] + ',term:' + message.term;
 
         sendRequest(
           uri,
           (text) => {
-            dictionaryData = parse(text, 'search');
-            sendResponse(dictionaryData);
+            let dictionaryData = parse(text, 'dictionary');
+
+            if (!dictionaryData)  {
+              /* Nothing found in dictionary, try from search results */
+
+              uri = SEARCH_URI + '?q=define+' + message.term;
+
+              sendRequest(
+                uri,
+                (text) => {
+                  dictionaryData = parse(text, 'search');
+                  sendResponse(dictionaryData);
+                },
+                (error) => {
+                  sendResponse({
+                    term: message.term,
+                    error: error.toString()
+                  });
+                }
+              );
+            }
+            
+            if (dictionaryData)
+              sendResponse(dictionaryData);
           },
           (error) => {
             sendResponse({
