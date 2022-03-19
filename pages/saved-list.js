@@ -4,10 +4,15 @@ function updateSavedCounter() {
     const saved = item.saved || {};
     const totalSaved = Object.keys(saved).length;
     const counter = document.getElementById('savedCounterHeading');
-    if (totalSaved > 0)
+    const exportButton = document.getElementById('exportButton');
+    if (totalSaved > 0) {
       counter.textContent = browser.i18n.getMessage('savedListPageTitle') + ' (' + totalSaved + ')';
-    else 
+      exportButton.classList.remove('d-none');
+    }
+    else {
       counter.textContent = '';
+      exportButton.classList.add('d-none');
+    }
   });
 }
 
@@ -202,22 +207,90 @@ Array.from(document.querySelectorAll('input[name="theme"]')).forEach((el) => {
 });
 
 
-function showSettingsModal(e) {
-  const modal = document.getElementById('settingsModal');
-  modal.classList.remove('hide');
-}
-
-document.getElementById('settingsButton').addEventListener('click', showSettingsModal);
-
-function closeSettingsModal(e) {
-  document.getElementById('settingsModal').classList.add('hide');
-}
-
-document.getElementById('settingsModal').addEventListener('click', function(e) {
-  if (e.target === this)
-    closeSettingsModal(e);
+document.querySelectorAll('.modal-open').forEach((el) => {
+  el.addEventListener('click', (e) => {
+    document.querySelector(el.dataset.target).classList.remove('hide');
+  });
 });
-document.getElementById('closeSettingsModalButton').addEventListener('click', closeSettingsModal);
+
+document.querySelectorAll('.modal-close').forEach((el) => {
+  el.addEventListener('click', (e) => {
+    document.querySelector(el.dataset.target).classList.add('hide');
+  });
+});
+
+document.querySelectorAll('.modal').forEach((el) => {
+  el.addEventListener('click', (e) => {
+    if (e.target === el)
+      el.classList.add('hide');
+  });
+});
+
+
+document.getElementById('exportDownloadButton').addEventListener('click', (e) => {
+  browser.storage.local.get('saved')
+  .then((item) => {
+    const saved = item.saved || {};
+
+    const container = document.getElementById('wordsContainer');
+
+    const words = Object.keys(saved).reverse();
+
+    if (!words.length)
+      return;
+
+    const options = Array.from(document.querySelectorAll('input[name="export_options"]:checked')).map((i) => i.value);
+
+    const rows = [];
+
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i];
+      const data = saved[word];
+      const row = [];
+      if (options.includes('words'))
+        row.push(word);
+      if (options.includes('types'))
+        row.push(data.type);
+      if (options.includes('definitions'))
+        row.push(data.definition);
+
+      rows.push(row);
+    }
+
+    function processRow(row) {
+      let finalVal = '';
+      for (let i = 0; i < row.length; i++) {
+        let innerValue = row[i] === null ? '' : row[i].toString();
+        let result = innerValue.replace(/"/g, '""');
+        if (result.search(/("|,|\n)/g) >= 0)
+            result = '"' + result + '"';
+        if (i > 0)
+            finalVal += ',';
+        finalVal += result;
+      }
+      return finalVal + '\n';
+    };
+
+    let csvFile = '';
+    for (let i = 0; i < rows.length; i++) {
+      csvFile += processRow(rows[i]);
+    }
+
+    const blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'dictonary-plus-vocabulary.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert('This feature is not supported by your browser');
+    }
+  });
+});
 
 
 (function () {
@@ -236,6 +309,8 @@ document.getElementById('closeSettingsModalButton').addEventListener('click', cl
   document.getElementById('themeLightLabel').textContent = browser.i18n.getMessage("themeLightLabel");
   document.getElementById('themeDarkLabel').textContent = browser.i18n.getMessage("themeDarkLabel");
   document.getElementById('closeSettingsModalButton').textContent = browser.i18n.getMessage("closeBtnTitle");
+  document.getElementById('exportButton').textContent = browser.i18n.getMessage("exportBtnLabel");
+  document.getElementById('closeExportModalButton').textContent = browser.i18n.getMessage("closeBtnTitle");
 
   updateSavedCounter();
   populateWords();

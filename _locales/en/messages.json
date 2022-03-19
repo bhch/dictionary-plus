@@ -89,6 +89,11 @@
     "description": "Text to display in 'Cancel' button."
   },
 
+  "exportBtnLabel": {
+    "message": "Export",
+    "description": "Text to display in 'Export' button."
+  },
+
   "savedListPageTitle": {
     "message": "Saved words",
     "description": "Window title for saved list page."
