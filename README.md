@@ -28,7 +28,7 @@ These are features that I'd like this extension to have in future:
  - [ ] Allow users to specify the language to use for dictionary lookup.
  - [ ] Allow users to view translations of a definition.
  - [x] Show info from Google's knowledge snippet or first search result if no definition is found.
- - [ ] Exporting saved words.
+ - [x] Exporting saved words.
 
 ## License
 
