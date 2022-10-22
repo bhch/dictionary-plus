@@ -80,12 +80,6 @@ function getPlacementCoords(width, height, beakSize, boundingRect) {
 function getStyles(placement, popUpHeight, popUpWidth) {
   const theme = SETTINGS.theme || 'light';
 
-  if (theme === 'dark') {
-
-  } else {
-
-  }
-
   let style = `
     * {
       line-height: 1;
@@ -307,13 +301,6 @@ function getStyles(placement, popUpHeight, popUpWidth) {
   `;
 
   return style;
-
-
-  const promise = new Promise((resolutionFunc, rejectionFunc) => {
-    resolutionFunc(style);
-  });
-
-  return promise;
 }
 
 
