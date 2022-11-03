@@ -1,49 +1,49 @@
 {
 
-  "manifest_version": 2,
-  "default_locale": "en",
-  "name": "__MSG_extensionName__",
-  "version": "5.5",
-  "description": "__MSG_extensionDescription__",
-  "homepage_url": "https://github.com/bhch/dictionary-plus",
-  "icons": {
-    "48": "icons/dictionary-plus-48.png",
-    "96": "icons/dictionary-plus-96.png",
-    "128": "icons/dictionary-plus-128.png",
-    "256": "icons/dictionary-plus-256.png",
-    "512": "icons/dictionary-plus-512.png"
-  },
-
-  "permissions": [
-    "menus",
-    "storage",
-    "unlimitedStorage",
-    "https://www.google.com/"
-  ],
-
-  "background": {
-    "scripts": [
-      "background_scripts/menus.js",
-      "background_scripts/actions.js",
-      "background_scripts/fetch-definition.js"
-    ]
-  },
-
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": [
-        "content_scripts/dictionary-plus.js",
-        "pages/saved-list.js"
-      ]
-    }
-  ], 
-
-  "browser_action": {
-    "default_icon": {
-      "48": "icons/dictionary-plus-48.png"
+    "manifest_version": 2,
+    "default_locale": "en",
+    "name": "__MSG_extensionName__",
+    "version": "1.0",
+    "description": "__MSG_extensionDescription__",
+    "homepage_url": "https://github.com/bluzky/ev-dict",
+    "icons": {
+        "48": "icons/icon-48.png",
+        "96": "icons/icon-96.png",
+        "128": "icons/icon-128.png",
+        "256": "icons/icon-256.png",
+        "512": "icons/icon-512.png"
     },
-    "default_title": "__MSG_actionBtnTitle__"
-  }
+
+    "permissions": [
+        "menus",
+        "storage",
+        "unlimitedStorage",
+        "<all_urls>"
+    ],
+
+    "background": {
+        "scripts": [
+            "background_scripts/menus.js",
+            "background_scripts/actions.js",
+            "background_scripts/fetch-definition.js"
+        ]
+    },
+
+    "content_scripts": [
+        {
+        "matches": ["<all_urls>"],
+        "js": [
+            "content_scripts/dictionary-plus.js",
+            "pages/saved-list.js"
+        ]
+    }
+    ], 
+
+    "browser_action": {
+        "default_icon": {
+            "48": "icons/icon-48.png"
+        },
+        "default_title": "__MSG_actionBtnTitle__"
+    }
 
 }

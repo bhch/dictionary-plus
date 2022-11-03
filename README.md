@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="100" src="icons/dictionary-plus-256.png" alt="Dictionary Plus Icon">
+    <img width="100" src="icons/icon-256.png" alt="EV Dictionary icon">
 </p>
 
 # Dctionary Plus

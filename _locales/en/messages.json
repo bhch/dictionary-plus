@@ -1,6 +1,6 @@
 {
   "extensionName": {
-    "message": "Dictionary Plus",
+    "message": "EV Dictionary - English Vietnamese dictionary: từ điển Anh Việt",
     "description": "Name of the extension."
   },
 
@@ -10,7 +10,7 @@
   },
 
   "actionBtnTitle": {
-    "message": "View saved words (Dictionary Plus)",
+    "message": "View saved words (EV Dictionary)",
     "description": "Title text for action button in browser toolbar."
   },
 
