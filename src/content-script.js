@@ -4,6 +4,8 @@ const OPENED_POPUPS = {};
 
 let SETTINGS = {};
 
+console.log("Hello world");
+
 browser.storage.local.get("settings").then((item) => {
   SETTINGS = item.settings || {};
 });

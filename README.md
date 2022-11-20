@@ -1,35 +1,47 @@
-<p align="center">
-    <img width="100" src="icons/icon-256.png" alt="EV Dictionary icon">
-</p>
+# Svelte + Vite
 
-# Dctionary Plus
+This template should help get you started developing with Svelte in Vite.
 
-A popup dictionary extension for Firefox for quickly looking up word-meanings.
+## Recommended IDE Setup
 
-It also allows you to save new words that you like and build your vocabulary.
+[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-## Install
+## Need an official Svelte framework?
 
-Get it from here: https://addons.mozilla.org/firefox/addon/dictionary-plus/
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
 
-## Contributing
+## Technical considerations
 
-You can contribute to this extension by:
+**Why use this over SvelteKit?**
 
- 1. reporting bugs or suggesting new features. 
- 2. recommending this extension to your friends.
- 3. reviewing it on [Mozilla Add-Ons page](https://addons.mozilla.org/en-US/firefox/addon/dictionary-plus/).
- 4. submitting code for new features or bugfixes.
+- It brings its own routing solution which might not be preferable for some users.
+- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
 
-## Future features
+This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
 
-These are features that I'd like this extension to have in future:
+Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
 
- - [ ] Allow users to specify the language to use for dictionary lookup.
- - [ ] Allow users to view translations of a definition.
- - [x] Show info from Google's knowledge snippet or first search result if no definition is found.
- - [x] Exporting saved words.
+**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
 
-## License
+Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
 
-[BSD-3-Clause](LICENSE)
+**Why include `.vscode/extensions.json`?**
+
+Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+
+**Why enable `checkJs` in the JS template?**
+
+It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
+
+**Why is HMR not preserving my local component state?**
+
+HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
+
+If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
+
+```js
+// store.js
+// An extremely simple external store
+import { writable } from 'svelte/store'
+export default writable(0)
+```

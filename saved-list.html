@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>EV Dictionary - Saved words</title>
-  <link rel="stylesheet" type="text/css" href="./saved-list.css">
+  <link rel="stylesheet" type="text/css" href="./src/saved-list.css">
   <link rel="shortcut icon" type="image/png" href="/icons/dictionary-plus-48.png">
 </head>
 <body>
@@ -76,8 +76,21 @@
           <td>
             <label><input type="radio" name="theme" value="light" checked> <span id="themeLightLabel">Light</span></label> 
             <label><input type="radio" name="theme" value="dark"> <span id="themeDarkLabel">Dark</span></label>
-        </td>
-        </tr>
+          </td>
+          <tr>
+              <td><span id="doubleClickSearch">Search on double click</span></td>
+              <td>
+                  <input type="checkbox" name="doubleClickSearch" value="light" checked> 
+          </td>
+          </tr>
+          <tr>
+              <td><span id="doubleClickKey">Double click combination key</span></td>
+              <td>
+                  <label><input type="radio" name="doubleClickKey" value="ctrl" checked> <span >Ctrl</span></label> 
+                  <label><input type="radio" name="doubleClickKey" value="shift"> <span >Shift</span></label>
+                  <label><input type="radio" name="doubleClickKey" value="alt"> <span >Alt</span></label>
+              </td>
+          </tr>
       </table>
     </div>
     <div class="dialog-footer">
@@ -106,6 +119,6 @@
   </div>
 </div>
 
-<script src="./saved-list.js"></script>
+<script src="/saved-list.js"></script>
 </body>
 </html>
