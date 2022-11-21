@@ -5,13 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-      "build": "vite build",
-      "watch": "vite build --watch",
+    "build": "vite build",
+    "watch": "vite build --watch",
     "preview": "vite preview"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.1.0",
+    "sass": "^1.56.1",
     "svelte": "^3.52.0",
     "vite": "^3.2.3"
+  },
+  "dependencies": {
+    "scss": "^0.2.4",
+    "svelte-preprocess": "^4.10.7"
   }
 }

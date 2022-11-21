@@ -91,7 +91,7 @@ function parse(json) {
   return {
     term: json.term,
     phonetic: "/" + json.phonetic + "/",
-    definition: json.details.map((item) => renderSection(item)).join("\n"),
+    definition: json.details,
     type: null,
     audio: null,
   };
