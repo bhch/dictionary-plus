@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg id="Icons" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>.cls-1{fill:#656769;}.cls-2{fill:#87898c;}.cls-3{fill:none;}.cls-3,.cls-4,.cls-6{stroke:#45413c;stroke-linecap:round;stroke-linejoin:round;}.cls-4{fill:#fff;}.cls-5,.cls-6{fill:#45413c;}.cls-5{opacity:0.15;}.cls-7{fill:#ffaa54;}.cls-8{fill:#ffe500;}.cls-9{fill:#fff48c;}</style>
+    <clipPath id="clip-0">
+      <ellipse style="fill: rgb(255, 255, 255);" cx="-16.398" cy="24.142" rx="22.332" ry="22.332" transform="matrix(-1, 0, 0, 1, 0, 0)"/>
+    </clipPath>
+  </defs>
+  <title>487-penguin-1</title>
+  <g style="" transform="matrix(0.975679, 0, 0, 0.975679, 1.087848, 9.07148)">
+    <g transform="matrix(1.005373, 0, 0, 1.005373, -2.702451, 0.362258)" style="">
+      <ellipse style="stroke-width: 10px; fill: rgb(255, 180, 48);" cx="253" cy="247" rx="247" ry="247"/>
+      <g id="_Group_" data-name="&lt;Group&gt;" style="clip-path: url(#clip-0);" transform="matrix(-11.194627, 0, 0, 11.194627, 442.573151, -20.263582)">
+        <circle id="_Path_" data-name="&lt;Path&gt;" class="cls-1" cx="25.76" cy="22.36" r="18.99"/>
+        <path id="_Path_2" data-name="&lt;Path&gt;" class="cls-2" d="M25.76,7.16a19,19,0,0,1,18.89,17.1,17.15,17.15,0,0,0,.1-1.9,19,19,0,0,0-38,0c0,.64,0,1.27.1,1.9A19,19,0,0,1,25.76,7.16Z"/>
+        <circle id="_Path_3" data-name="&lt;Path&gt;" class="cls-3" cx="25.76" cy="22.36" r="18.99"/>
+        <path id="_Path_4" data-name="&lt;Path&gt;" class="cls-4" d="M23.59,12.59A14.62,14.62,0,0,0,10.27,33.33,18.77,18.77,0,0,0,28,41.2a14.65,14.65,0,0,0-4.44-28.61Z"/>
+        <circle id="_Path_5" data-name="&lt;Path&gt;" class="cls-6" cx="22.5" cy="21.82" r="1.63"/>
+        <path id="_Path_6" data-name="&lt;Path&gt;" class="cls-7" d="M29,28.13c0,.55-.88,1-2,1s-2-.45-2-1,.88-1,2-1S29,27.58,29,28.13Z"/>
+        <path id="_Path_7" data-name="&lt;Path&gt;" class="cls-8" d="M13,29.4a6.69,6.69,0,0,0-3.44-2.13L7.31,26.7l-3.56,4a2.89,2.89,0,0,0,2,4.83l6.48.44L13.38,34A3.94,3.94,0,0,0,13,29.4Z"/>
+        <path id="_Path_8" data-name="&lt;Path&gt;" class="cls-9" d="M3.31,33.9a2.85,2.85,0,0,0,1.78,1.48l-.2-.19h0c-1-1.07-.65-2.36.8-3.24l6.05-3.71a7,7,0,0,0-2.15-1L7.31,26.7l-3.56,4A2.89,2.89,0,0,0,3.31,33.9Z"/>
+        <path id="_Path_9" data-name="&lt;Path&gt;" class="cls-3" d="M13,29.4a6.69,6.69,0,0,0-3.44-2.13L7.31,26.7l-3.56,4a2.89,2.89,0,0,0,2,4.83l6.48.44L13.38,34A3.94,3.94,0,0,0,13,29.4Z"/>
+        <path id="_Path_10" data-name="&lt;Path&gt;" class="cls-3" d="M3.31,33.9a21.26,21.26,0,0,0,5.62-.69,8.76,8.76,0,0,0,4.35-2.71l.26-.33"/>
+      </g>
+      <ellipse style="fill: none; stroke-width: 10px; stroke: rgb(255, 179, 0); paint-order: stroke; stroke-miterlimit: 0;" cx="256" cy="245.189" rx="247" ry="247"/>
+    </g>
+  </g>
+</svg>

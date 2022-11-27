@@ -1,5 +1,6 @@
+<svelte:options tag={null}/>
 <script>
-  export let meaning;
+export let meaning;
 </script>
 
 <li class="level-3">

@@ -1,6 +1,7 @@
+<svelte:options tag={null}/>
 <script>
-  import PopupMeaning from "./PopupMeaning.svelte";
-  export let group;
+import PopupMeaning from "./PopupMeaning.svelte";
+export let group;
 </script>
 
 <section class="level-2">
@@ -18,9 +19,6 @@
     color: rgb(249, 115, 22);
 }
 
-.level-2 > li {
-    margin-bottom: 5px;
-}
 
 .mn-list{
     list-style-type: disc;

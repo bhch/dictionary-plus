@@ -1,4 +1,3 @@
-<svelte:options tag="content-popup" />
 
 <script>
   import PopupSection from "./components/PopupSection.svelte";

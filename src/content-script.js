@@ -3,7 +3,6 @@ const LOADING_MESSAGE = browser.i18n.getMessage("loadingMessage");
 const NO_DEFINITION_MESSAGE = browser.i18n.getMessage("noDefinitionMessage");
 const OPENED_POPUPS = {};
 
-console.log("HELLO");
 let SETTINGS = {};
 
 browser.storage.local.get("settings").then((item) => {

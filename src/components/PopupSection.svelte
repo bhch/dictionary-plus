@@ -1,8 +1,9 @@
 <script>
-  import PopupMeaning from "./PopupMeaning.svelte";
-  import PopupGroup from "./PopupGroup.svelte";
-  export let section;
+import PopupMeaning from "./PopupMeaning.svelte";
+import PopupGroup from "./PopupGroup.svelte";
+export let section;
 </script>
+<svelte:options tag={null}/>
 
 <section class="level-1">
   <div class="label">{section.name}</div>

@@ -5,7 +5,11 @@ import sveltePreprocess from "svelte-preprocess";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svelte({ preprocess: sveltePreprocess() })],
+  plugins: [
+    svelte({
+      preprocess: sveltePreprocess(),
+    }),
+  ],
   build: {
     minify: false,
     rollupOptions: {
@@ -15,6 +19,7 @@ export default defineConfig({
         path.resolve(__dirname, "./src/menus.js"),
         path.resolve(__dirname, "./src/content-script.js"),
         path.resolve(__dirname, "./src/background.js"),
+        path.resolve(__dirname, "./popup.html"),
         path.resolve(__dirname, "./src/saved-list.js"),
         path.resolve(__dirname, "./saved-list.html"),
       ],

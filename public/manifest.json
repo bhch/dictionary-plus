@@ -18,13 +18,13 @@
         "menus",
         "storage",
         "unlimitedStorage",
+        "clipboardRead",
         "<all_urls>"
     ],
 
     "background": {
         "scripts": [
             "menus.js",
-            "actions.js",
             "background.js"
         ]
     },
@@ -41,10 +41,12 @@
     ], 
 
     "browser_action": {
+        "browser_style": false,
         "default_icon": {
             "48": "icons/icon-48.png"
         },
-        "default_title": "__MSG_actionBtnTitle__"
+        "default_popup": "popup.html",
+        "default_title": "__MSG_extensionName__"
     }
 
 }
