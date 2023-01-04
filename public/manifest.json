@@ -33,8 +33,7 @@
         {
         "matches": ["<all_urls>"],
         "js": [
-            "content-script.js",
-            "saved-list.js"
+            "content-script.js"
         ],
         "css": ["assets/content-script.css"]
     }

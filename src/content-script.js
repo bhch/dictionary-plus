@@ -1,3 +1,4 @@
+console.log("Hello");
 import PopupContent from "./PopupContent.svelte";
 const LOADING_MESSAGE = browser.i18n.getMessage("loadingMessage");
 const NO_DEFINITION_MESSAGE = browser.i18n.getMessage("noDefinitionMessage");
@@ -146,6 +147,7 @@ browser.runtime.onMessage.addListener((message) => {
   if (message.type === "context-menu") {
     /* from context menu */
     if (message.data === "open-popup") {
+      console.log("how");
       // :TODO: don't open popup if already open for current selection
       // or maybe close previous popups before opening new
       createPopUp();
@@ -153,7 +155,7 @@ browser.runtime.onMessage.addListener((message) => {
   }
 });
 document.addEventListener("dblclick", (e) => {
-  debug();
+  console.log("Hello there");
   createPopUp();
 });
 
@@ -176,7 +178,7 @@ function onStorageChange(changes, area) {
 
 browser.storage.onChanged.addListener(onStorageChange);
 
-window.addEventListener("keyup", (e) => {
+window.addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.key == "F") {
     createPopUp();
   }
