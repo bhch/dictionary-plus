@@ -35,7 +35,7 @@
         "js": [
             "content-script.js"
         ],
-        "css": ["assets/content-script.css"]
+        "css": ["css/content.css"]
     }
     ], 
 

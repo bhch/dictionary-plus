@@ -80,7 +80,7 @@
         title="Word has been saved">Saved</span
       ><a
         class="link-more"
-        href="https://pawtools.org/dictionary?keyword=options"
+        href={"https://pawtools.org/dictionary?keyword=" + term}
         target="_blank"
         rel="noreferrer"
         title="Full definition">More</a

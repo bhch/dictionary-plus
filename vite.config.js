@@ -13,15 +13,12 @@ export default defineConfig({
   build: {
     minify: false,
     rollupOptions: {
-      // https://rollupjs.org/guide/en/#big-list-of-options
       input: [
         path.resolve(__dirname, "./src/actions.js"),
         path.resolve(__dirname, "./src/menus.js"),
         path.resolve(__dirname, "./src/content-script.js"),
         path.resolve(__dirname, "./src/background.js"),
-        path.resolve(__dirname, "./popup.html"),
         path.resolve(__dirname, "./src/saved-list.js"),
-        path.resolve(__dirname, "./saved-list.html"),
       ],
       output: {
         preserveModules: false,
