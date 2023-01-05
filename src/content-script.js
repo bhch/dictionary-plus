@@ -155,8 +155,7 @@ browser.runtime.onMessage.addListener((message) => {
   }
 });
 document.addEventListener("dblclick", (e) => {
-  console.log("Hello there");
-  createPopUp();
+  if (e.ctrlKey) createPopUp();
 });
 
 document.addEventListener("click", (e) => {

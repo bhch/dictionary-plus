@@ -24,6 +24,7 @@
 
     "background": {
         "scripts": [
+            "browser-polyfill.js",
             "menus.js",
             "background.js"
         ]
@@ -33,9 +34,10 @@
         {
         "matches": ["<all_urls>"],
         "js": [
+            "browser-polyfill.js",
             "content-script.js"
         ],
-        "css": ["css/content.css"]
+        "css": ["content.css"]
     }
     ], 
 

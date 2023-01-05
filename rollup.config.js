@@ -41,7 +41,6 @@ export default [
   },
   {
     input: [
-      path.resolve(__dirname, "./src/actions.js"),
       path.resolve(__dirname, "./src/menus.js"),
       path.resolve(__dirname, "./src/content-script.js"),
       path.resolve(__dirname, "./src/background.js"),
@@ -61,7 +60,13 @@ export default [
       resolve({ browser: true }),
       css({ output: "content.css" }),
       copy({
-        targets: [{ src: "public/*", dest: "dist" }],
+        targets: [
+          { src: "public/*", dest: "dist" },
+          {
+            src: "node_modules/webextension-polyfill/dist/browser-polyfill.js",
+            dest: "dist/",
+          },
+        ],
       }),
     ],
   },

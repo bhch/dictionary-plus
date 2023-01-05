@@ -53,7 +53,7 @@
     <div class="content">
       {#if data.definition}
       <div class="phonetic">{data.phonetic}</div>
-      <div class="type">{data.type}</div>
+      <div class="type">{data.type || ""}</div>
       <div class="definition">
           {#each data.definition as section}
               <PopupSection {section} />

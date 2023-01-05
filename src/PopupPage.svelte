@@ -97,6 +97,7 @@
       bind:value={term}
       autocomplete="off"
       on:keyup={handleKeyUp}
+        on:focus={(e) => e.target.select()}
     />
     <button
       class="inline-block px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-orange-600 rounded-lg rounded-l-none hover:bg-orange-500 focus:outline-none focus:ring"

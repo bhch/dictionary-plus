@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "scss": "^0.2.4",
-    "svelte-preprocess": "^4.10.7"
+    "svelte-preprocess": "^4.10.7",
+    "webextension-polyfill": "^0.10.0"
   }
 }
