@@ -10,6 +10,11 @@
   let selectedIndex = -1;
   const LOADING_MESSAGE = browser.i18n.getMessage("loadingMessage");
   const NO_DEFINITION_MESSAGE = browser.i18n.getMessage("noDefinitionMessage");
+  let SETTINGS = {};
+
+  browser.storage.local.get("settings").then((item) => {
+    SETTINGS = item.settings || {};
+  });
 
   onMount(() => {
     navigator.clipboard.readText().then((clipText) => {
@@ -70,7 +75,7 @@
       if (selectedIndex < 0) {
         selectedIndex = suggestions.length - 1;
       }
-        return;
+      return;
     }
 
     if (e.key == "ArrowDown" && suggestions.length > 0) {
@@ -78,7 +83,7 @@
       if (selectedIndex >= suggestions.length) {
         selectedIndex = 0;
       }
-        return;
+      return;
     }
 
     if (term.length > 2) {
@@ -86,9 +91,17 @@
       return;
     }
   }
+
+  function saveSetting(value) {
+    SETTINGS.quickSearch = value;
+    browser.storage.local.set({ settings: SETTINGS });
+  }
 </script>
 
-<main class="p-8" style="min-height: 400px;">
+<main
+  class="p-8"
+  style="min-height: 400px; max-height:600px; overflow-y: scroll;"
+>
   <div class="flex">
     <input
       type="text"
@@ -97,7 +110,7 @@
       bind:value={term}
       autocomplete="off"
       on:keyup={handleKeyUp}
-        on:focus={(e) => e.target.select()}
+      on:focus={(e) => e.target.select()}
     />
     <button
       class="inline-block px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-orange-600 rounded-lg rounded-l-none hover:bg-orange-500 focus:outline-none focus:ring"
@@ -114,22 +127,26 @@
       >
         {#each suggestions as item, index}
           <div
-              class="block p-1 px-4 cursor-pointer hover:bg-blue-50"
-              class:bg-blue-100="{index == selectedIndex}"
+            class="block p-1 px-4 cursor-pointer hover:bg-blue-50"
+            class:bg-blue-100={index == selectedIndex}
             on:click={doSearch(item.term)}
           >
-              <div>
-                  <span  class="font-bold">{item.term}</span>
-                  <span class="text-gray-500 italic ml-1">{item.phonetic ? ("/" +item.phonetic + "/") : ""}</span>
-              </div>
-            <span class="ml-2 text-sm text-gray-500 leading-tight">{item.brief_meaning}</span>
+            <div>
+              <span class="font-bold">{item.term}</span>
+              <span class="text-gray-500 italic ml-1"
+                >{item.phonetic ? "/" + item.phonetic + "/" : ""}</span
+              >
+            </div>
+            <span class="ml-2 text-sm text-gray-500 leading-tight"
+              >{item.brief_meaning}</span
+            >
           </div>
         {/each}
       </nav>
     </div>
   {/if}
 
-  <div class="content mt-4">
+  <div class="content mt-4 mb-8">
     {#if data.definition}
       <div class="phonetic italic">{data.phonetic}</div>
       <div class="type">{data.type || ""}</div>
@@ -151,6 +168,49 @@
         {NO_DEFINITION_MESSAGE}
       </div>
     {/if}
+  </div>
+  <div
+    class="fixed bottom-0 left-0 z-20 w-full border-t-1 border-slate-200 bg-slate-50 p-3 px-5"
+  >
+    <div class="small">
+      Tra nhanh:
+      <label
+        ><input
+             class="ml-2"
+          type="radio"
+          name="quickSearch"
+          checked={SETTINGS.quickSearch == "off"}
+          on:click={() => saveSetting("off")}
+        /> <span>off</span>
+      </label>
+      <label
+      ><input
+           class="ml-2"
+           type="radio"
+           name="quickSearch"
+           checked={SETTINGS.quickSearch == "dblclick"}
+           on:click={() => saveSetting("dblclick")}
+       /> <span>dbl click</span></label
+                                >
+      <label
+      ><input
+           class="ml-2"
+           type="radio"
+           name="quickSearch"
+           checked={SETTINGS.quickSearch == "ctrl"}
+           on:click={() => saveSetting("ctrl")}
+       /> <span>ctrl</span></label
+                           >
+      <label
+      ><input
+           class="ml-2"
+           type="radio"
+           name="quickSearch"
+           checked={SETTINGS.quickSearch == "alt"}
+           on:click={() => saveSetting("alt")}
+       /> <span>alt</span></label
+                          >
+    </div>
   </div>
 </main>
 

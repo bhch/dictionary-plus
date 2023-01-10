@@ -1,4 +1,3 @@
-console.log("Hello");
 import PopupContent from "./PopupContent.svelte";
 const LOADING_MESSAGE = browser.i18n.getMessage("loadingMessage");
 const NO_DEFINITION_MESSAGE = browser.i18n.getMessage("noDefinitionMessage");
@@ -7,7 +6,7 @@ const OPENED_POPUPS = {};
 let SETTINGS = {};
 
 browser.storage.local.get("settings").then((item) => {
-  SETTINGS = item.settings || {};
+  SETTINGS = item.settings || { searchKey: "dblclick" };
 });
 
 function getSelectionData() {
@@ -155,7 +154,12 @@ browser.runtime.onMessage.addListener((message) => {
   }
 });
 document.addEventListener("dblclick", (e) => {
-  if (e.ctrlKey) createPopUp();
+  console.log("xxxx");
+  if (SETTINGS.quickSearch != "off") {
+    if (SETTINGS.quickSearch == "ctrl" && !e.ctrlKey) return;
+    if (SETTINGS.quickSearch == "alt" && !e.altKey) return;
+    createPopUp();
+  }
 });
 
 document.addEventListener("click", (e) => {
@@ -175,7 +179,7 @@ function onStorageChange(changes, area) {
   SETTINGS = settings.newValue;
 }
 
-browser.storage.onChanged.addListener(onStorageChange);
+browser.storage.local.onChanged.addListener(onStorageChange);
 
 window.addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.key == "F") {
