@@ -619,6 +619,11 @@ browser.runtime.onMessage.addListener((message) => {
 
 
 document.addEventListener('dblclick', (e) => {
+  if (SETTINGS.hasOwnProperty('dblClickTrigger')) {
+    if (!SETTINGS.dblClickTrigger)
+      return;
+  }
+
   createPopUp();
 });
 

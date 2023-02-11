@@ -207,6 +207,25 @@ Array.from(document.querySelectorAll('input[name="theme"]')).forEach((el) => {
 });
 
 
+function setDblClickTrigger() {
+  browser.storage.local.get('settings')
+  .then((item) => {
+    const settings = item.settings || {};
+    if (settings.hasOwnProperty('dblClickTrigger')) {
+      if (!settings.dblClickTrigger) {
+        document.querySelector('input[name="dblClickTrigger"]').checked = false;
+      }
+    }
+  });
+}
+
+function toggleDblClickTrigger(e) {
+  updateSettings('dblClickTrigger', e.target.checked);
+}
+
+document.querySelector('input[name="dblClickTrigger"]').addEventListener('click', toggleDblClickTrigger);
+
+
 document.querySelectorAll('.modal-open').forEach((el) => {
   el.addEventListener('click', (e) => {
     document.querySelector(el.dataset.target).classList.remove('hide');
@@ -308,6 +327,7 @@ document.getElementById('exportDownloadButton').addEventListener('click', (e) =>
   document.getElementById('themeSettingLabel').textContent = browser.i18n.getMessage("changeThemeLabel");
   document.getElementById('themeLightLabel').textContent = browser.i18n.getMessage("themeLightLabel");
   document.getElementById('themeDarkLabel').textContent = browser.i18n.getMessage("themeDarkLabel");
+  // TODO: add translations for double trigger settings
   document.getElementById('closeSettingsModalButton').textContent = browser.i18n.getMessage("closeBtnTitle");
   document.getElementById('exportButton').textContent = browser.i18n.getMessage("exportBtnLabel");
   document.getElementById('closeExportModalButton').textContent = browser.i18n.getMessage("closeBtnTitle");
@@ -315,4 +335,5 @@ document.getElementById('exportDownloadButton').addEventListener('click', (e) =>
   updateSavedCounter();
   populateWords();
   setTheme();
+  setDblClickTrigger();
 })();
