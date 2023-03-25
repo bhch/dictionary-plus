@@ -1,8 +1,8 @@
-const DICTIONARY_URI_BASE = "https://www.google.com/async/callback:5493?fc=EswBCowBQU1sdnJwc0NnaGs5ak10YWRSNDN0LTdwRUhGcy13aTV6LTktX3JyT3lLLUhqV3pPYm14bk9YeHhJc0xOdVJqUFJvLW55eHdudnEtZG9rdWtiWndrYmZ3bWVveGVnYVNlamd5R2Vidk1pd3p4NmhVMTRicHhiQk8wVXRQdGpfbzBMdmQzMkgyTWZvcV8SF1JCZmZZZDM3S0lyU3o3c1BnYnFPeUFFGiJBSFdTTm1YaG9wTENBRDJ0ZG5Uc0VwUnJTSGtjOFd2M0xB&fcv=3&vet=12ahUKEwjdra7G5az1AhUK6XMBHQGdAxkQg4MCegQIEBAB..i&ved=2ahUKEwj3lKvJ5az1AhUL_XMBHeKbCTgQu-gBegQIARAN&yv=3&oq=buy&async=hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:en,ptl:hi,_fmt:prog,_id:fc_2"
+const DICTIONARY_URI_BASE = "https://www.google.com/async/callback:5493?fc=EswBCowBQUVzN2pOUkF1SzlOems0NzJ2azkyX3RkUE0tOWt6RE1tcWdnbjdjZlNXQ3FPOUg4SVNKNlZPSWdsMTJoUkdhcFFKTDVQR09aV2t1QVJIcm9SeUR5N1RVQm1pWGM5ZFJheTVPVXBtSWp4a2ttb0duMU8zRl9YSTdhY1ZfZFU1dUJTV2hJcUZmN2ZWZ2USFzdLRWVaTU9XTkxfYzQtRVAxTWlkcUFZGiJBTy0wcmw3eDFjLXotV2lWNFFNSW5QTnZuOC1tTXBTMzdR&fcv=3&vet=12ahUKEwjdra7G5az1AhUK6XMBHQGdAxkQg4MCegQIEBAB..i&ved=2ahUKEwj3lKvJ5az1AhUL_XMBHeKbCTgQu-gBegQIARAN&yv=3&oq=buy&async=hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:en,ptl:hi,_fmt:prog,_id:fc_2"
 
 const DICTIONARY_URIS = [
   DICTIONARY_URI_BASE + ',corpus:en',
-  DICTIONARY_URI_BASE + ',corpus:en-US', // for american IP addresses (VPN etc)
+  DICTIONARY_URI_BASE + ',corpus:en-US', // for american IP addresses (VPN etc) // Note: this parameter has stopped working since 25 Mar, 2023
 ]
 
 const SEARCH_URI = 'https://www.google.com/search';
@@ -110,11 +110,15 @@ function fromDictionary(doc) {
   const term = doc.querySelector('span[data-dobid="hdw"]').textContent.trim();
 
   let phonetic = '';
+  /*
+  Note: Google has stopped returning phonetic data since 25 Mar, 2023
+
   const phoneticEl = doc.querySelector('span[data-dobid="hdw"]').parentElement
     .parentElement.nextElementSibling
 
   if (phoneticEl)
     phonetic = phoneticEl.textContent.trim();
+  */
 
   const definition = doc.querySelector('div[data-dobid="dfn"]').textContent;
 
