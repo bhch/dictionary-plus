@@ -1,4 +1,4 @@
-const DICTIONARY_URI_BASE = "https://www.google.com/async/callback:5493?fc=EswBCowBQUVzN2pOUkF1SzlOems0NzJ2azkyX3RkUE0tOWt6RE1tcWdnbjdjZlNXQ3FPOUg4SVNKNlZPSWdsMTJoUkdhcFFKTDVQR09aV2t1QVJIcm9SeUR5N1RVQm1pWGM5ZFJheTVPVXBtSWp4a2ttb0duMU8zRl9YSTdhY1ZfZFU1dUJTV2hJcUZmN2ZWZ2USFzdLRWVaTU9XTkxfYzQtRVAxTWlkcUFZGiJBTy0wcmw3eDFjLXotV2lWNFFNSW5QTnZuOC1tTXBTMzdR&fcv=3&vet=12ahUKEwjdra7G5az1AhUK6XMBHQGdAxkQg4MCegQIEBAB..i&ved=2ahUKEwj3lKvJ5az1AhUL_XMBHeKbCTgQu-gBegQIARAN&yv=3&oq=buy&async=hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:en,ptl:hi,_fmt:prog,_id:fc_2"
+const DICTIONARY_URI_BASE = "https://www.google.com/async/callback:5493?fc=EswBCowBQUpHOUprTTRjV1J0YXNBdV9TdDczbmlCbXRMRGdrUEQ1OTQ5cGh3aG90TzVGU1dvVEM5d1hGTEZJN19POVVMZDJtb2xjVmxfU3duYkF0TnNEVGl2VW5LaWtDVTZKd1Nkck1iam0xRUJzOFJwbXlEQm5RRUR1ZGtkQzdnaFFYenFrb3FXNG54d21iSzQSF1lPMVdac183R3ZySTFzUVBnb3FJeVFVGiJBRlhyRWNvZUlicGhtVWsyc25Eb3NSMkw0WV81em1DYTR3&fcv=3&vet=12ahUKEwjPq9O8vrKGAxV6pJUCHQIFIlkQg4MCegQIJBAB..i&ved=2ahUKEwjPq9O8vrKGAxV6pJUCHQIFIlkQmp0CegQIJBBI&yv=3&oq=buy&async=hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:en,ptl:hi,_fmt:prog,_id:fc_2"
 
 const DICTIONARY_URIS = [
   DICTIONARY_URI_BASE + ',corpus:en',
@@ -101,13 +101,25 @@ function sendRequest(uri, callback, errorCallback) {
 }
 
 
-function fromDictionary(doc) {
-  if (!doc.querySelector('span[data-dobid="hdw"]')) /* No definition returned */
+function fromAjaxDictionary(doc) {
+  if (!doc.querySelector('div[data-bkt="dictionary"]')) /* No definition returned */
     return false;
 
   // we use the term returned by the dictionary 
   // as it converts plurals to singulars, etc.
-  const term = doc.querySelector('span[data-dobid="hdw"]').textContent.trim();
+
+  const termEl = doc.querySelector('div[data-maindata]');
+  const termData = termEl.dataset.maindata;
+  const termRegex = /(dictionary_term",")(\w+)/gm;
+  const termMatches = [...termData.matchAll(termRegex)];
+  let term;
+  if (termMatches.length) {
+    try {
+        term = termMatches[0][2];
+    } catch (err) {
+        term = null;
+    }
+  }
 
   let phonetic = '';
   /*
@@ -150,6 +162,67 @@ function fromDictionary(doc) {
 }
 
 
+function fromSearchDictionary(doc) {
+  /* Extract definition from dictionary data on the search page */
+
+  if (!doc.querySelector('div[data-bkt="dictionary"]')) /* No definition returned */
+    return false;
+
+  // we use the term returned by the dictionary 
+  // as it converts plurals to singulars, etc.
+  const termEl = doc.querySelector('div[data-bkt="dictionary"][data-maindata]');
+  const termData = termEl.dataset.maindata;
+  const termRegex = /(dictionary_term",")(\w+)/gm;
+  const termMatches = [...termData.matchAll(termRegex)];
+  let term;
+  if (termMatches.length) {
+    try {
+        term = termMatches[0][2];
+    } catch (err) {
+        term = null;
+    }
+  }
+
+  let phonetic = '';
+  /*
+  Note: Google has stopped returning phonetic data since 25 Mar, 2023
+
+  const phoneticEl = doc.querySelector('span[data-dobid="hdw"]').parentElement
+    .parentElement.nextElementSibling
+
+  if (phoneticEl)
+    phonetic = phoneticEl.textContent.trim();
+  */
+
+  const definition = doc.querySelector('div[data-psd^="sense_definition"]').dataset.psd.split('sense_definition~:&')[1];
+
+  let type = '';
+  let typeEl = doc.querySelector('div[class~="YrbPuc"]');
+  
+  if (typeEl)
+    type = typeEl.textContent;
+
+  const audioEl = doc.querySelector('audio[jsname="QInZvb"] source');
+  let audio = null;
+
+  if (audioEl) {
+    let src = audioEl.getAttribute('src');
+
+    if (!src.startsWith('https'))
+      src = 'https:' + src;
+
+    audio = src;
+  }
+
+  return {
+    term: term,
+    phonetic: phonetic,
+    definition: definition,
+    type: type,
+    audio: audio
+  };
+}
+
 function fromKnowledgePanel(doc) {
   const span = doc.querySelector('#rhs div[data-attrid="description"] span');
   
@@ -170,9 +243,16 @@ function parse(htmlString, type) {
   let doc = new DOMParser().parseFromString(htmlString, 'text/html');
 
   if (type === 'dictionary')
-    return fromDictionary(doc);
+    return fromAjaxDictionary(doc);
 
-  let data = fromKnowledgePanel(doc);
+  // if here, the ajax lookup has failed, so we'll try other methods
+
+  let data;
+
+  data = fromSearchDictionary(doc);
+
+  if (!data)
+    data = fromKnowledgePanel(doc);
 
   if (!data)
     data = fromFeaturedSearch(doc);
