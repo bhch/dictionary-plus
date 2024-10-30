@@ -33,8 +33,7 @@
     {
       "matches": ["<all_urls>"],
       "js": [
-        "content_scripts/dictionary-plus.js",
-        "pages/saved-list.js"
+        "content_scripts/dictionary-plus.js"
       ]
     }
   ], 
