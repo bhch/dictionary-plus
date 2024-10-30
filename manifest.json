@@ -43,6 +43,10 @@
       "48": "icons/dictionary-plus-48.png"
     },
     "default_title": "__MSG_actionBtnTitle__"
+  },
+
+  "options_ui": {
+    "page": "options/options.html"
   }
 
 }
