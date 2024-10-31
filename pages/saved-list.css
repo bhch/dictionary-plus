@@ -309,7 +309,8 @@ h1 {
   z-index: 100;
 }
 .dialog {
-  max-width: 380px;
+  max-width: 600px;
+  min-width: 550px;
   display: table;
   margin: auto;
   margin-top: 10%;
@@ -351,6 +352,12 @@ h1 {
   margin-bottom: 0.25rem;
   cursor: pointer;
 }
+label.stacked {
+  display: table;
+  width: 100%;
+  white-space: nowrap;
+  margin-bottom: 3px;
+}
 
 .reload-prompt {
   position: fixed;
@@ -372,6 +379,7 @@ h1 {
 
 table {
   border-collapse: collapse;
+  width: 100%;
 }
 tr td {
   border-bottom: 1px solid #ddd;

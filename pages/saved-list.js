@@ -155,17 +155,6 @@ function onStorageChange(changes, area) {
 browser.storage.onChanged.addListener(onStorageChange);
 
 
-function closeModal(e) {
-  document.getElementById('confirmRemoveModal').classList.add('hide');
-}
-
-document.getElementById('confirmRemoveModal').addEventListener('click', function(e) {
-  if (e.target === this)
-    closeModal(e);
-});
-document.getElementById('cancelButton').addEventListener('click', closeModal);
-
-
 function updateSettings(key, value) {
   browser.storage.local.get('settings')
     .then((item) => {
@@ -226,22 +215,65 @@ function toggleDblClickTrigger(e) {
 document.querySelector('input[name="dblClickTrigger"]').addEventListener('click', toggleDblClickTrigger);
 
 
+function setLocale() {
+  browser.storage.local.get('settings')
+  .then((item) => {
+    const settings = item.settings || {};
+    let locale = settings.locale || window.navigator.language;
+    if (locale === 'en-US') {
+      Array.from(document.querySelectorAll('input[name="locale"]')).forEach((el) => {
+        el.checked = el.value === 'en-US';
+      });
+    }
+  });
+}
+
+
+function toggleLocale(e) {
+  const locale = e.target.value;
+  updateSettings('locale', locale);
+}
+
+Array.from(document.querySelectorAll('input[name="locale"]')).forEach((el) => {
+  el.addEventListener('click', toggleLocale);
+});
+
+
+function openModal(target) {
+  if (typeof target === 'string')
+    target = document.querySelector(target)
+
+  target.classList.remove('hide');
+}
+
+function closeModal(target) {
+  if (typeof target === 'string')
+    target = document.querySelector(target)
+
+  target.classList.add('hide');
+
+  if (window.location.hash === '#' + target.id) {
+    history.pushState('', document.title, window.location.pathname + window.location.search);
+  }
+}
+
+
 document.querySelectorAll('.modal-open').forEach((el) => {
   el.addEventListener('click', (e) => {
-    document.querySelector(el.dataset.target).classList.remove('hide');
+    openModal(el.dataset.target);
   });
 });
 
 document.querySelectorAll('.modal-close').forEach((el) => {
   el.addEventListener('click', (e) => {
-    document.querySelector(el.dataset.target).classList.add('hide');
+    closeModal(el.dataset.target);
   });
 });
 
 document.querySelectorAll('.modal').forEach((el) => {
   el.addEventListener('click', (e) => {
     if (e.target === el)
-      el.classList.add('hide');
+      closeModal(el);
   });
 });
 
@@ -336,4 +368,10 @@ document.getElementById('exportDownloadButton').addEventListener('click', (e) =>
   populateWords();
   setTheme();
   setDblClickTrigger();
+  setLocale();
+
+  if (window.location.hash === '#settingsModal') {
+    openModal('#settingsModal');
+  }
+
 })();
