@@ -286,7 +286,7 @@ const GoogleWebSearchProvider = {
       return {definition: span.textContent};
   },
 
-  praseFromFeaturedSearch: function(doc) {
+  parseFromFeaturedSearch: function(doc) {
     const span = doc.querySelector('div[data-attrid="wa:/description"] span span');
 
     if (span)
