@@ -18,7 +18,9 @@
     "menus",
     "storage",
     "unlimitedStorage",
-    "https://www.google.com/"
+    "https://www.google.com/",
+    "https://uk.search.yahoo.com/",
+    "https://search.yahoo.com/"
   ],
 
   "background": {
