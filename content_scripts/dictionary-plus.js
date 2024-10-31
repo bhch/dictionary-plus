@@ -204,6 +204,20 @@ function getStyles(placement, popUpHeight, popUpWidth) {
       line-height: 1.3;
     }
 
+    .example {
+      color: ${theme === 'dark' ? '#aaa' : '#777'};
+      font-family: sans-serif;
+      font-size: 13px;
+      font-weight: normal;
+      font-style: italic;
+      line-height: 1.3;
+      margin-top: 6px;
+    }
+
+    .example:empty {
+      display: none;
+    }
+
     .error {
       color: ${theme === 'dark' ? '#fff' : '#c30404'};
       background: ${theme === 'dark' ? '#920202' : '#ffebeb'};
@@ -374,6 +388,9 @@ function createPopUp() {
   definition.setAttribute('class', 'definition');
   definition.textContent = LOADING_MESSAGE;
 
+  let example = document.createElement('div');
+  example.setAttribute('class', 'example');
+
   let linkMore = document.createElement('a');
   linkMore.setAttribute('class', 'link-more');
   linkMore.setAttribute('href', 'https://google.com/search?q=define+' + selectedText);
@@ -412,6 +429,7 @@ function createPopUp() {
   content.appendChild(phonetic);
   content.appendChild(type);
   content.appendChild(definition);
+  content.appendChild(example);
 
   popup.appendChild(footer);
   footer.appendChild(btnSave);
@@ -444,6 +462,7 @@ function getPopUpElements(key) {
     shadowRoot: popup,
     term: popup.querySelector('.term'),
     definition: popup.querySelector('.definition'),
+    example: popup.querySelector('.example'),
     phonetic: popup.querySelector('.phonetic'),
     type: popup.querySelector('.type'),
     audio: popup.querySelector('audio'),
@@ -557,6 +576,7 @@ function updatePopUp(key, data) {
     popup.querySelector('.phonetic').textContent = data.phonetic;
     popup.querySelector('.type').textContent = data.type;
     popup.querySelector('.definition').textContent = data.definition;
+    popup.querySelector('.example').textContent = data.example ? 'E.g.: ' + data.example : '';
   }
 
   if (data.audio) {
