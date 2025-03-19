@@ -18,7 +18,7 @@ You can contribute to this extension by:
 
  1. reporting bugs or suggesting new features. 
  2. recommending this extension to your friends.
- 3. reviewing it on [Mozilla Add-Ons page](https://addons.mozilla.org/en-US/firefox/addon/dictionary-plus/).
+ 3. reviewing it on [Mozilla Add-Ons page](https://addons.mozilla.org/firefox/addon/dictionary-plus/).
  4. submitting code for new features or bugfixes.
 
 ## Future features
