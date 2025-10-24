@@ -543,7 +543,10 @@ function saveWord(key) {
 
 
 function updatePopUp(key, data) {
-  const popupNode = OPENED_POPUPS[key].node;
+  const popupNode = OPENED_POPUPS[key]?.node;
+
+  // If user clicks out before definition is retrieved, `OPEN_POPUPS[key]` will not exist
+  if (popupNode === undefined) return;
 
   const popup = popupNode.shadowRoot;
 
