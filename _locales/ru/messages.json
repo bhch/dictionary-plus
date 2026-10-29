@@ -1,126 +1,126 @@
 {
   "extensionName": {
-    "message": "Dictionary Plus",
+    "message": "Словарь Плюс",
     "description": "Name of the extension."
   },
 
   "extensionDescription": {
-    "message": "Een pop-up woordenboek voor het snel opzoeken van woordbetekenissen. Het stelt je ook in staat om nieuwe woorden op te slaan die je leuk vindt en om je woordenschat op te bouwen.",
+    "message": "Всплывающий словарь для быстрого поиска значений слов. Он также позволяет сохранять новые слова, которые вам нравятся, и пополнять словарный запас.",
     "description": "Description of the extension."
   },
 
   "actionBtnTitle": {
-    "message": "Bekijk opgeslagen woorden (Dictionary Plus)",
+    "message": "Посмотреть сохраненные слова (Словарь Плюс)",
     "description": "Title text for action button in browser toolbar."
   },
 
   "contextMenu": {
-    "message": "Zoek woordenboek",
+    "message": "Искать в словаре",
     "description": "Context menu label."
   },
 
   "loadingMessage": {
-    "message": "Zoeken...",
+    "message": "Загрузка...",
     "description": "Loading message."
   },
 
   "noDefinitionMessage": {
-    "message": "Geen definitie gevonden.",
+    "message": "Определение не найдено.",
     "description": "Message to show when no definition was found."
   },
 
   "closeBtnTitle": {
-    "message": "Sluiten",
+    "message": "Закрыть",
     "description": "Title text for popup's close button."
   },
 
   "pronounceBtnTitle": {
-    "message": "Uitspraak",
+    "message": "Произношение",
     "description": "Title text for audio pronounciation button."
   },
 
   "moreBtnLabel": {
-    "message": "Meer",
+    "message": "Подробнее",
     "description": "Text to display in 'More' button."
   },
 
   "moreBtnTitle": {
-    "message": "Volledige definitie",
+    "message": "Полное определение",
     "description": "Title text for 'More' button."
   },
 
   "saveBtnLabel": {
-    "message": "Opslaan",
+    "message": "Сохранить",
     "description": "Text to display in 'Save' button."
   },
 
   "saveBtnTitle": {
-    "message": "Woord opslaan",
+    "message": "Сохранить слово",
     "description": "Title text for 'Save' button."
   },
 
   "savedBtnLabel": {
-    "message": "Opgeslagen",
+    "message": "Сохранено",
     "description": "Text to display in 'Saved' button (after word is saved)."
   },
 
   "savedBtnTitle": {
-    "message": "Woord is opgeslagen",
+    "message": "Слово сохранено",
     "description": "Title text for 'Saved' button."
   },
 
   "removeBtnLabel": {
-    "message": "Verwijderen",
+    "message": "Удалить",
     "description": "Text to display in 'Remove' button."
   },
 
   "removeBtnTitle": {
-    "message": "Verwijder dit woord",
+    "message": "Удалить это слово",
     "description": "Title text for 'Remove' button."
   },
 
   "confirmRemoveBtnLabel": {
-    "message": "Ja, verwijder",
+    "message": "Да, удалить",
     "description": "Text to display on confirm remove button inside modal."
   },
 
   "cancelBtnLabel": {
-    "message": "Annuleren",
+    "message": "Отмена",
     "description": "Text to display in 'Cancel' button."
   },
 
   "exportBtnLabel": {
-    "message": "Export",
+    "message": "Экспорт",
     "description": "Text to display in 'Export' button."
   },
 
   "savedListPageTitle": {
-    "message": "Opgeslagen woorden",
+    "message": "Сохраненные слова",
     "description": "Window title for saved list page."
   },
 
   "emptyListMessage": {
-    "message": "Opgeslagen woorden verschijnen hier",
+    "message": "Здесь будут сохраненные слова",
     "description": "Message displayed on saved list page when no words are saved yet."
   },
 
   "removeModalTitle": {
-    "message": "Woord verwijderen?",
+    "message": "Удалить слово?",
     "description": "Title for remove word modal."
   },
 
   "removeModalBody": {
-    "message": "Weet u zeker dat u dit woord definitief wilt verwijderen?",
+    "message": "Вы уверены, что хотите навсегда удалить это слово?",
     "description": "Text to show in remove word modal body."
   },
 
   "reloadMessage": {
-    "message": "Er zijn nieuwe woorden toegevoegd aan of verwijderd uit deze lijst.<br><strong>Herlaad</strong> de pagina om de wijzigingen te zien.",
+    "message": "В этот список были добавлены новые слова или удалены старые.<br><strong>Обновите</strong> страницу, чтобы увидеть изменения.",
     "description": "Reload message for saved list page."
   },
 
   "footerMessage": {
-    "message": "Wilt u een nieuwe functie? Bug gevonden? Verslag over $GitHubLink$.",
+    "message": "Хотите новую функцию? Нашли ошибку?<br>Сообщите на $GitHubLink$.",
     "description": "Footer message for extension pages.",
     "placeholders": {
       "githublink": {
@@ -130,22 +130,22 @@
   },
 
   "settingsLabel": {
-    "message": "Instellingen",
+    "message": "Настройки",
     "Description": "Text for label and button for Settings."
   },
 
   "changeThemeLabel": {
-    "message": "Verander kleurenthema",
+    "message": "Сменить тему",
     "description": "Text for changing theme."
   },
 
   "themeLightLabel": {
-    "message": "Licht",
+    "message": "Светлая",
     "description": "Name or label for Light theme."
   },
 
   "themeDarkLabel": {
-    "message": "Donker",
+    "message": "Темная",
     "description": "Name or label for Dark theme."
   }
 }

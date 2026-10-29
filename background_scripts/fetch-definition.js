@@ -2,26 +2,48 @@ let SETTINGS = {};
 
 browser.storage.local.get('settings')
 .then((item) => {
-  SETTINGS = item.settings || {}; // use OR because item.settings may be undefined 
+  SETTINGS = item.settings || {}; // use OR because item.settings may be undefined
                                   // which would also make the SETTINGS variable undefined
 });
 
 browser.storage.onChanged.addListener((changes, area) => {
-  SETTINGS = changes.settings.newValue;
+  if (changes.settings)
+    SETTINGS = changes.settings.newValue || {};
 });
 
+const LookupLocales = ['en-GB', 'en-US', 'de-DE', 'ru-UA'];
+
+function buildAttempts(locales) {
+  const attempts = [];
+
+  for (const locale of locales) {
+    for (const provider of DefinitionProviders) {
+      if (provider.supportsLocale(locale)) {
+        attempts.push({provider, locale});
+      }
+    }
+  }
+
+  return attempts;
+}
 
 const BaseDefinitionProvider = {
   defaultLocale: 'en-GB',
-  
-  getBaseUri: function(locale) {
-    if (!this.baseUris.hasOwnProperty(locale))
-      locale = this.defaultLocale;
 
+  supportsLocale: function(locale) {
+    return this.baseUris.hasOwnProperty(locale);
+  },
+
+  getBaseUri: function(locale) {
     return this.baseUris[locale];
   },
 
   fetch: function({term, locale, successCallback, emptyCallback, errorCallback}) {
+    if (!this.supportsLocale(locale)) {
+      emptyCallback();
+      return;
+    }
+
     const uri = this.getLookupUri(term, locale);
 
     sendRequest(
@@ -43,7 +65,6 @@ const BaseDefinitionProvider = {
   }
 };
 
-
 const YahooProvider = {
   __proto__: BaseDefinitionProvider,
 
@@ -62,7 +83,7 @@ const YahooProvider = {
   parse: function(term, locale, textResponse) {
     const doc = new DOMParser().parseFromString(textResponse, 'text/html');
     const containerEl = doc.querySelector('.sys_dictionary');
-    
+
     if (!containerEl)
       return;
 
@@ -70,7 +91,7 @@ const YahooProvider = {
     const phoneticEl = containerEl.querySelectorAll('.compTitle')[2];
     const typeEl = containerEl.querySelector('.compTitle + .compText');
     const definitionItemEl = containerEl.querySelector('.compTextList ul li');
-    
+
     if (!definitionItemEl)
       return;
 
@@ -105,84 +126,6 @@ const YahooProvider = {
       example: exampleEl ? exampleEl.textContent : '',
       audio: audio,
     }
-  }
-};
-
-
-const GoogleAjaxProvider = {
-  __proto__: BaseDefinitionProvider,
-
-  name: 'GoogleAjaxProvider',
-
-  baseUri: 'https://www.google.com/async/callback:5493?fc=EswBCowBQUpHOUprTTRjV1J0YXNBdV9TdDczbmlCbXRMRGdrUEQ1OTQ5cGh3aG90TzVGU1dvVEM5d1hGTEZJN19POVVMZDJtb2xjVmxfU3duYkF0TnNEVGl2VW5LaWtDVTZKd1Nkck1iam0xRUJzOFJwbXlEQm5RRUR1ZGtkQzdnaFFYenFrb3FXNG54d21iSzQSF1lPMVdac183R3ZySTFzUVBnb3FJeVFVGiJBRlhyRWNvZUlicGhtVWsyc25Eb3NSMkw0WV81em1DYTR3&fcv=3&vet=12ahUKEwjPq9O8vrKGAxV6pJUCHQIFIlkQg4MCegQIJBAB..i&ved=2ahUKEwjPq9O8vrKGAxV6pJUCHQIFIlkQmp0CegQIJBBI&yv=3&oq=buy&async=hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:en,ptl:hi,_fmt:prog,_id:fc_2',
-
-  baseUris: {
-    'en-GB': this.baseUri + ',corpus:en',
-    'en-US': this.baseUri + ',corpus:en-US', // for american IP addresses (VPN etc) // Note: this parameter has stopped working since 25 Mar, 2023
-  },
-
-  getLookupUri: function(term, locale) {
-    const baseUri = this.getBaseUri(locale);
-    return baseUri + ',term:' + term;
-  },
-
-  parse: function(term, locale, textResponse) {
-    const doc = new DOMParser().parseFromString(textResponse, 'text/html');
-
-    if (!doc.querySelector('div[data-bkt="dictionary"]')) /* No definition returned */
-      return false;
-
-    const termEl = doc.querySelector('div[data-maindata]');
-    const termData = termEl.dataset.maindata;
-    const termRegex = /(dictionary_term",")(\w+)/gm;
-    const termMatches = [...termData.matchAll(termRegex)];
-    let term2;
-    if (termMatches.length) {
-      try {
-          term2 = termMatches[0][2];
-      } catch (err) {
-          term2 = null;
-      }
-    }
-
-    let phonetic = '';
-    /*
-    Note: Google has stopped returning phonetic data since 25 Mar, 2023
-
-    const phoneticEl = doc.querySelector('span[data-dobid="hdw"]').parentElement
-      .parentElement.nextElementSibling
-
-    if (phoneticEl)
-      phonetic = phoneticEl.textContent.trim();
-    */
-
-    const definition = doc.querySelector('div[data-dobid="dfn"]').textContent;
-
-    let type = '';
-    let typeEl = doc.querySelector('div[data-dobid="dfn"]').closest('ol').previousElementSibling;
-
-    if (typeEl.querySelector('i'))
-      type = typeEl.querySelector('i').textContent;
-
-    const audioEl = doc.querySelector('audio[jsname="QInZvb"] source');
-    let audio = null;
-
-    if (audioEl) {
-      let src = audioEl.getAttribute('src');
-
-      if (!src.startsWith('https'))
-        src = 'https:' + src;
-
-      audio = src;
-    }
-
-    return {
-      term: term2 || term,
-      phonetic: phonetic,
-      definition: definition,
-      type: type,
-      audio: audio
-    };
   }
 };
 
@@ -224,7 +167,7 @@ const GoogleWebSearchProvider = {
     if (!doc.querySelector('div[data-bkt="dictionary"]')) /* No definition returned */
       return false;
 
-    // we use the term returned by the dictionary 
+    // we use the term returned by the dictionary
     // as it converts plurals to singulars, etc.
     const termEl = doc.querySelector('div[data-bkt="dictionary"][data-maindata]');
     const termData = termEl.dataset.maindata;
@@ -254,7 +197,7 @@ const GoogleWebSearchProvider = {
 
     let type = '';
     let typeEl = doc.querySelector('div[class~="YrbPuc"]');
-    
+
     if (typeEl)
       type = typeEl.textContent;
 
@@ -281,7 +224,7 @@ const GoogleWebSearchProvider = {
 
   parseFromKnowledgePanel: function(doc) {
     const span = doc.querySelector('#rhs div[data-attrid="description"] span');
-    
+
     if (span)
       return {definition: span.textContent};
   },
@@ -295,11 +238,95 @@ const GoogleWebSearchProvider = {
 };
 
 
+const WiktionaryProvider = {
+  __proto__: BaseDefinitionProvider,
+
+  name: 'WiktionaryProvider',
+
+  baseUris: {
+    'de-DE': 'https://de.wiktionary.org/w/api.php',
+    'ru-UA': 'https://ru.wiktionary.org/w/api.php',
+  },
+
+  getLookupUri: function(term, locale) {
+    const params = new URLSearchParams({
+      action: 'parse',
+      page: term,
+      prop: 'text',
+      format: 'json',
+      formatversion: '2',
+      redirects: '1',
+    });
+
+    return this.getBaseUri(locale) + '?' + params.toString();
+  },
+
+  parse: function(term, locale, textResponse) {
+    let data;
+    try {
+      data = JSON.parse(textResponse);
+    } catch (error) {
+      return false;
+    }
+
+    if (data.error || !data.parse) {
+      return false;
+    }
+
+    const html = typeof data.parse.text === 'string' ? data.parse.text : data.parse.text?.['*'];
+    if (!html) {
+      return false;
+    }
+
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const definition = this.extractDefinition(doc);
+    if (!definition) {
+      return false;
+    }
+
+    return {
+      term: data.parse.title || term,
+      phonetic: '',
+      definition: definition,
+      type: this.extractType(doc, locale),
+      example: '',
+      audio: null,
+    };
+  },
+
+  extractDefinition: function(doc) {
+    const candidates = [
+      ...doc.querySelectorAll('.mw-parser-output ol > li'),
+      ...doc.querySelectorAll('.mw-parser-output dl > dd'),
+    ];
+
+    for (const candidate of candidates) {
+      candidate.querySelectorAll('sup, .reference, style, table').forEach((el) => el.remove());
+      let text = candidate.textContent.replace(/\s+/g, ' ').trim();
+      text = text.replace(/^\[\d+\]\s*/, '').replace(/^\d+[.)]\s*/, '').trim();
+
+      if (text.length) {
+        return text;
+      }
+    }
+
+    return '';
+  },
+
+  extractType: function(doc, locale) {
+    const typeWords = locale === 'ru-UA' ? ['существительное', 'глагол', 'прилагательное', 'наречие'] : ['Substantiv', 'Verb', 'Adjektiv', 'Adverb'];
+
+    const text = doc.body.textContent;
+    return typeWords.find((typeWord) => text.includes(typeWord)) || '';
+  },
+};
+
+
 /* List of definition providers by priority */
 const DefinitionProviders = [
   YahooProvider,
-  GoogleAjaxProvider,
   GoogleWebSearchProvider,
+  WiktionaryProvider,
 ];
 
 
@@ -309,11 +336,11 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return;
   }
 
-  const locale = SETTINGS.locale || window.navigator.language;
+  const attempts = buildAttempts(LookupLocales);
   const term = message.term;
 
-  function runProvider(providerIndex, term, locale, error) {
-    if (providerIndex >= DefinitionProviders.length) {
+  function runAttempt(attemptIndex, term, error) {
+    if (attemptIndex >= attempts.length) {
       /* Tried all providers and nothing was found. */
       if (error) {
         sendResponse({
@@ -326,18 +353,18 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
       return true;
     }
 
-    const provider = DefinitionProviders[providerIndex];
+    const { provider, locale } = attempts[attemptIndex];
 
     provider.fetch({
       term: term,
       locale: locale,
       successCallback: (data) => sendResponse(data),
-      emptyCallback: () => runProvider(providerIndex + 1, term, locale, null),
-      errorCallback: (error) => runProvider(providerIndex + 1, term, locale, error),
+      emptyCallback: () => runAttempt(attemptIndex + 1, term, null),
+      errorCallback: (error) => runAttempt(attemptIndex + 1, term, error),
     });
   }
 
-  runProvider(0, term, locale, null);
+  runAttempt(0, term, null);
 
   return true;
 
@@ -347,7 +374,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 function sendRequest(uri, locale, callback, errorCallback) {
 
   let headers = new Headers({
-    'Accept-Language': locale === 'en-US' ? 'en-US,en;q=0.7,en-GB;q=0.3' : 'en-GB,en;q=0.7,en-US;q=0.3',
+    'Accept-Language': locale,
     'Cookie': ''
   });
 

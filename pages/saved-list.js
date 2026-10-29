@@ -18,6 +18,7 @@ function updateSavedCounter() {
 
 
 function populateWords() {
+  // What is say that it stores the words locally to the storage
   browser.storage.local.get('saved')
   .then((item) => {
     const saved = item.saved || {};
@@ -92,6 +93,15 @@ function populateWords() {
       let footer = document.createElement('div');
       footer.setAttribute('class', 'footer');
 
+      let btnModify = document.createElement('button');
+      btnModify.setAttribute('class', 'btn btn-modify');
+      btnModify.setAttribute('type', 'button');
+      btnModify.setAttribute('data-target', '#modifyWordModal');
+      btnModify.textContent = 'Edit definition';
+      btnModify.onclick = function(e) {
+        openModifyWordModal(word, data, e.currentTarget);
+      };
+
       let btnRemove = document.createElement('button');
       btnRemove.setAttribute('class', 'btn btn-remove');
       btnRemove.textContent = browser.i18n.getMessage('removeBtnLabel');
@@ -115,6 +125,7 @@ function populateWords() {
       content.appendChild(definition);
 
       panel.appendChild(footer);
+      footer.appendChild(btnModify);
       footer.appendChild(btnRemove);
       footer.appendChild(linkMore);
     }
@@ -123,6 +134,39 @@ function populateWords() {
 
 }
 
+function openModifyWordModal(word, data, el) {
+  document.getElementById('originalWordInput').value = word;
+  document.getElementById('wordInput').value = '';
+  document.getElementById('typeInput').value = data.type || '';
+  document.getElementById('phoneticInput').value = data.phonetic || '';
+  document.getElementById('definitionInput').value = data.definition || '';
+
+  openModal(el.dataset.target);
+}
+
+function updateWordDefinition(e) {
+  e.preventDefault();
+
+  const originalWord = document.getElementById('originalWordInput').value;
+  const word = document.getElementById('wordInput').value.trim();
+
+  browser.storage.local.get('saved')
+  .then((item) => {
+    const saved = item.saved || {};
+    const currentWordData = saved[originalWord] || {};
+
+
+    saved[word] = {
+      ...currentWordData,
+      type: document.getElementById('typeInput').value.trim(),
+      phonetic: document.getElementById('phoneticInput').value.trim(),
+      definition: document.getElementById('definitionInput').value.trim()
+    };
+
+    browser.storage.local.set({saved: {...saved}})
+    .then(() => window.location.reload());
+  });
+}
 
 function removeWord(word) {
   const modal = document.getElementById('confirmRemoveModal');
@@ -219,13 +263,21 @@ function setLocale() {
   browser.storage.local.get('settings')
   .then((item) => {
     const settings = item.settings || {};
-    let locale = settings.locale || window.navigator.language;
-    if (locale === 'en-US') {
-      Array.from(document.querySelectorAll('input[name="locale"]')).forEach((el) => {
-        el.checked = el.value === 'en-US';
-      });
-    }
+    let locale = getSupportedLocale(settings.locale || window.navigator.language);
+    Array.from(document.querySelectorAll('input[name="locale"]')).forEach((el) => {
+      el.checked = el.value === locale;
+    });
   });
+}
+
+function getSupportedLocale(locale) {
+  if (locale === 'en-US')
+    return 'en-US';
+  if (locale && locale.startsWith('de'))
+    return 'de-DE';
+  if (locale && locale.startsWith('ru'))
+    return 'ru-RU';
+  return 'en-GB';
 }
 
 
@@ -276,6 +328,8 @@ document.querySelectorAll('.modal').forEach((el) => {
       closeModal(el);
   });
 });
+
+document.getElementById('modifyWordForm').addEventListener('submit', updateWordDefinition);
 
 
 document.getElementById('exportDownloadButton').addEventListener('click', (e) => {

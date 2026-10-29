@@ -11,7 +11,7 @@
 <div class="page-header">
   <div class="container">
     <div class="branding">
-      <img src="/icons/dictionary-plus-256.png">
+      <img src="/icons/IconDict256.ico">
       <span id="extensionName">Dictionary Plus</span>
     </div>
     <div class="header-menu">
@@ -36,11 +36,7 @@
 
 <div class="page-footer">
   <div class="container">
-    <p id="footerMsg">
-      Want a new feature? Found a bug?<br>
-      Report on
-      <a href="https://github.com/bhch/dictionary-plus">GitHub</a>.
-    </p>
+    <p id="footerMsg"></p>
   </div>
 </div>
 
@@ -64,6 +60,37 @@
   </div>
 </div>
 
+<div id="modifyWordModal" class="modal hide">
+  <div class="dialog">
+    <div class="dialog-heading">
+      <h3>Edit definition</h3>
+    </div>
+    <div class="dialog-body">
+      <form id="modifyWordForm" class="word-form">
+        <label for="originalWordInput">Original word</label>
+        <input type="text" id="originalWordInput" name="originalWord" readonly>
+
+        <label for="wordInput">Word</label>
+        <input type="text" id="wordInput" name="word" required>
+
+        <label for="typeInput">Part of speech</label>
+        <input type="text" id="typeInput" name="type">
+
+        <label for="phoneticInput">Phonetic</label>
+        <input type="text" id="phoneticInput" name="phonetic">
+
+        <label for="definitionInput">Definition</label>
+        <textarea id="definitionInput" name="definition" rows="5" required></textarea>
+      </form>
+    </div>
+    <div class="dialog-footer">
+      <button class="btn" type="submit" form="modifyWordForm" id="saveDefinitionButton">Save definition</button>
+      <button class="btn modal-close" type="button" id="cancelModifyButton" data-target="#modifyWordModal">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
 <div id="settingsModal" class="modal hide">
   <div class="dialog">
     <div class="dialog-heading">
@@ -85,10 +112,12 @@
           </td>
         </tr>
         <tr>
-          <td><span id="localeSettingLabel">Pronunciation preference</span></td>
+          <td><span id="localeSettingLabel">Dictionary language</span></td>
           <td>
             <label class="stacked"><input type="radio" name="locale" value="en-GB" checked> 🇬🇧 <span id="localeGBLabel">British</span></label> 
             <label class="stacked"><input type="radio" name="locale" value="en-US"> 🇺🇸 <span id="localeUSLabel">American</span></label>
+            <label class="stacked"><input type="radio" name="locale" value="de-DE"> 🇩🇪 <span id="localeDELabel">German</span></label>
+            <label class="stacked"><input type="radio" name="locale" value="ru-RU"> 🇷🇺 <span id="localeRULabel">Russian</span></label>
           </td>
         </tr>
       </table>

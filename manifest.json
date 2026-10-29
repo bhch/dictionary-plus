@@ -1,54 +1,48 @@
 {
-
-  "manifest_version": 2,
-  "default_locale": "en",
+  "manifest_version": 3,
+  "default_locale": "de",
   "name": "__MSG_extensionName__",
-  "version": "5.9.1",
+  "version": "6",
   "description": "__MSG_extensionDescription__",
-  "homepage_url": "https://github.com/bhch/dictionary-plus",
+  "homepage_url": "https://github.com/mykhaylo-zhovkevych/dictionary-plus-mz/",
   "icons": {
-    "48": "icons/dictionary-plus-48.png",
-    "96": "icons/dictionary-plus-96.png",
-    "128": "icons/dictionary-plus-128.png",
-    "256": "icons/dictionary-plus-256.png",
-    "512": "icons/dictionary-plus-512.png"
+    "48": "icons/IconDict48.ico",
+    "256": "icons/IconDict256.ico",
+    "512": "icons/IconDict512.ico"
   },
 
   "permissions": [
     "menus",
     "storage",
-    "unlimitedStorage",
-    "https://www.google.com/",
-    "https://uk.search.yahoo.com/",
-    "https://search.yahoo.com/"
+    "unlimitedStorage"
   ],
-
+  "host_permissions": [
+    "https://www.google.com/*",
+    "https://uk.search.yahoo.com/*",
+    "https://search.yahoo.com/*",
+    "https://de.wiktionary.org/*",
+    "https://ru.wiktionary.org/*"
+  ],
   "background": {
-    "scripts": [
-      "background_scripts/menus.js",
-      "background_scripts/actions.js",
-      "background_scripts/fetch-definition.js"
-    ]
+    "scripts": ["background.js"],
+    "service_worker": "background.js",
+    "type": "module"
   },
-
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": [
-        "content_scripts/dictionary-plus.js"
+        "content.js"
       ]
     }
-  ], 
-
-  "browser_action": {
+  ],
+  "action": {
     "default_icon": {
-      "48": "icons/dictionary-plus-48.png"
+      "48": "icons/IconDict48.ico"
     },
     "default_title": "__MSG_actionBtnTitle__"
   },
-
   "options_ui": {
     "page": "options/options.html"
   }
-
 }

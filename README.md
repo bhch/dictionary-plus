@@ -1,21 +1,18 @@
 <p align="center">
-    <img width="100" src="icons/dictionary-plus-256.png" alt="Dictionary Plus Icon">
+    <img width="100" src="icons/IconDict256.ico" alt="Dictionary Plus Icon">
 </p>
 
-# Dctionary Plus
+# Dictionary Plus
 
 A popup dictionary extension for Firefox for quickly looking up word-meanings.
-
 It also allows you to save new words that you like and build your vocabulary.
+And it allows you to store words in JSON format, with ability to modify saved vocabulary.
+And it supports other languages translation compatibility with respect of limitations within db 
 
-## Install
-
-Get it from here: https://addons.mozilla.org/firefox/addon/dictionary-plus/
 
 ## Contributing
 
 You can contribute to this extension by:
-
  1. reporting bugs or suggesting new features. 
  2. recommending this extension to your friends.
  3. reviewing it on [Mozilla Add-Ons page](https://addons.mozilla.org/firefox/addon/dictionary-plus/).
@@ -31,5 +28,6 @@ These are features that I'd like this extension to have in future:
  - [x] Exporting saved words.
 
 ## License
+Creator https://github.com/Faeziix/dictionary-plus
 
 [BSD-3-Clause](LICENSE)
